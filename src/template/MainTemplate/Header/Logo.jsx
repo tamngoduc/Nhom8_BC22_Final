@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 // react icons
 import { FaAirbnb } from "react-icons/fa";
-import { flexCenter } from "../../../Theme/ComonStyles";
 import { pink } from "@mui/material/colors";
+import { flexCenter } from "../../../themes/comonStyles";
 
 const Logo = () => {
   return (
@@ -19,7 +19,7 @@ const Logo = () => {
         }}
         component="h3"
       >
-        airBnB
+        airbnb
       </Typography>
     </Box>
   );

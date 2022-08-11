@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import roomAPI from "services/roomAPI";
+import roomAPI from "../services/roomAPI";
 
 const initialState = {
   roomsList: [],

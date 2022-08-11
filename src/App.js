@@ -1,9 +1,9 @@
-import { ThemeProvider } from "@emotion/react";
+import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import Home from "pages/Home/Home";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import MainTemplate from "template/MainTemplate/MainTemplate";
-import theme from "Theme/AppthemeProvider";
+import MainTemplate from "./template/MainTemplate/MainTemplate";
+import Home from "./pages/Home/Home";
+import theme from "./themes/appThemeProvider";
 
 function App() {
   return (

@@ -7,7 +7,8 @@ import Stack from "@mui/material/Stack";
 import { BsGlobe } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
-import { flexCenter } from "../../../Theme/ComonStyles";
+import { flexCenter } from "../../../themes/comonStyles";
+
 const ProfileSetting = () => {
   return (
     <Box sx={flexCenter}>
