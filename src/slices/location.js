@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import locationAPI from "../services/locationAPI";
+import locationAPI from "services/locationAPI";
 
 const initialState = {
   locationsList: [],
