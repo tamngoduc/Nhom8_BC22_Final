@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import React from "react";
+import Box from "@mui/material/Box";
+import CssBaseLine from "@mui/material/CssBaseline";
+import Header from "./Component/Home_Header/Header";
+import Footer from "./Component/Home_Footer/Footer";
+import FooterMenu from "./Component/Home_Footer/FooterMenu";
+import { displayOnDesktop } from "./Theme/ComonStyles";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <CssBaseLine />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+        }}
+      >
+        <Box>
+          <Header />
+        </Box>
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <FooterMenu />
+        </Box>
+        <Box sx={displayOnDesktop}>
+          <Footer />
+        </Box>
+      </Box>
+    </React.Fragment>
   );
 }
 
