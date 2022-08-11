@@ -1,33 +1,22 @@
-import "./App.css";
-import React from "react";
-import Box from "@mui/material/Box";
-import CssBaseLine from "@mui/material/CssBaseline";
-import Header from "./Component/Home_Header/Header";
-import Footer from "./Component/Home_Footer/Footer";
-import FooterMenu from "./Component/Home_Footer/FooterMenu";
-import { displayOnDesktop } from "./Theme/ComonStyles";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import MainTemplate from "./template/MainTemplate/MainTemplate";
+import Home from "./pages/Home/Home";
+import theme from "./themes/appThemeProvider";
+
 function App() {
   return (
-    <React.Fragment>
-      <CssBaseLine />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100vh",
-        }}
-      >
-        <Box>
-          <Header />
-        </Box>
-        <Box sx={{ display: { xs: "flex", md: "none" } }}>
-          <FooterMenu />
-        </Box>
-        <Box sx={displayOnDesktop}>
-          <Footer />
-        </Box>
-      </Box>
-    </React.Fragment>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes>
+          <Route path="/" element={<MainTemplate />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

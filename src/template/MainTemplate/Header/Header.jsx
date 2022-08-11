@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Logo from "./Logo";
 import LocationSearch from "./LocationSearch";
+import ProfileSetting from "./ProfileSetting";
+import MobileSearch from "./MobileSearch";
 import {
   flexBetweenCenter,
   dFlex,
   displayOnDesktop,
-} from "../../Theme/ComonStyles";
-import ProfileSetting from "./ProfileSetting";
-import MobileSearch from "./MobileSearch";
+} from "../../../themes/comonStyles";
+
 const Header = () => {
   return (
     <Box

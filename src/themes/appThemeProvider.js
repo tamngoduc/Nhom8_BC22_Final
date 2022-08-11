@@ -1,6 +1,6 @@
-import React from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import { grey, pink } from "@mui/material/colors";
+
 const theme = createTheme({
   typography: {
     allVariants: {
@@ -66,8 +66,5 @@ const theme = createTheme({
     },
   },
 });
-const AppthemeProvider = (prop) => {
-  return <ThemeProvider theme={theme}>{prop.children}</ThemeProvider>;
-};
 
-export default AppthemeProvider;
+export default theme;
