@@ -17,9 +17,9 @@ const initialState = {
 
 export const getRoomsList = createAsyncThunk(
   "room/getRoomsList",
-  async (roomId) => {
+  async (locationId) => {
     try {
-      const data = await roomAPI.getRoomsList(roomId);
+      const data = await roomAPI.getRoomsList(locationId);
       return data;
     } catch (error) {
       throw error;
