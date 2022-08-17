@@ -58,7 +58,7 @@ const Footer = () => {
                 </Box>
                 English
               </Button>
-              <Button>$CAD</Button>
+              <Button>VND</Button>
               <Button>Support and Resource</Button>
               <Box sx={{ ...justifyCenter, ml: 1 }}>
                 <IoChevronUpOutline size={24} />

@@ -4,6 +4,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import MainTemplate from "./template/MainTemplate/MainTemplate";
 import Home from "./pages/Home/Home";
 import theme from "./themes/appThemeProvider";
+import RoomsList from "./pages/RoomsList/RoomsList";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainTemplate />}>
             <Route index element={<Home />} />
+            <Route path="rooms/:locationId" element={<RoomsList />} />
           </Route>
         </Routes>
       </ThemeProvider>

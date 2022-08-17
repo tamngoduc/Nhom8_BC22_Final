@@ -1,9 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { displayOnDesktop } from "../../themes/comonStyles";
 import Footer from "./Footer/Footer";
 import FooterMenu from "./Footer/FooterMenu";
+import MobileFooter from "./Footer/MobileFooter";
 import Header from "./Header/Header";
 
 const MainTemplate = () => {
@@ -28,7 +29,17 @@ const MainTemplate = () => {
           overflowY: "scroll",
         }}
       >
-        <Outlet />
+        <Container maxWidth="xl" sx={{ mb: 3 }}>
+          <Outlet />
+
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+            }}
+          >
+            <MobileFooter />
+          </Box>
+        </Container>
       </Box>
 
       <Box sx={{ display: { xs: "flex", md: "none" } }}>
