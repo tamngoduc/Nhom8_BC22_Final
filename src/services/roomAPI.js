@@ -12,6 +12,16 @@ const roomAPI = {
   bookRoom: (bookingData) => {
     return axiosClient.post("rooms/booking", bookingData);
   },
+
+  updateRoom: (roomId, room) => {
+    return axiosClient.post(`/rooms/${roomId}`, room);
+  },
+
+  uploadRoomImage: (roomId) => {},
+
+  deleteRoom: (roomId) => {
+    return axiosClient.delete(`/rooms/${roomId}`);
+  },
 };
 
 export default roomAPI;
