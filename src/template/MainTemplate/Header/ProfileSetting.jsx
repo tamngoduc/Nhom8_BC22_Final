@@ -8,21 +8,30 @@ import { BsGlobe } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { flexCenter } from "../../../themes/comonStyles";
+import LoginIcon from "@mui/icons-material/Login";
 
 const ProfileSetting = () => {
   return (
     <Box sx={flexCenter}>
-      <Link href="#">Become a Host</Link>
       <Stack>
         <Button>
+          <Link href="#">Become a Host</Link>
           <BsGlobe size={24} />
         </Button>
+      </Stack>
+
+      <Stack justifyContent="flex-end">
         <Button sx={{ boderRadius: 10, border: "1px solid #ddd" }}>
-          <BsGlobe size={24} />
-          <Stack>
-            <AiOutlineMenu size={24} />
-            <FaRegUserCircle size={24} />
-          </Stack>
+          <FaRegUserCircle size={24} />
+          <Link sx={{ fontSize: "15px" }} href="#">
+            Đăng nhập
+          </Link>
+        </Button>
+        <Button sx={{ boderRadius: 10, border: "1px solid #ddd" }}>
+          <FaRegUserCircle size={24} />
+          <Link sx={{ fontSize: "15px" }} href="#">
+            Đăng kí
+          </Link>
         </Button>
       </Stack>
     </Box>
