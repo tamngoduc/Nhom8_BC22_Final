@@ -34,7 +34,9 @@ const MobileSearch = () => {
   };
 
   useEffect(() => {
-    dispatch(getLocationsList(""));
+    if (!locationsList.length) {
+      dispatch(getLocationsList(""));
+    }
   }, []);
 
   return (
