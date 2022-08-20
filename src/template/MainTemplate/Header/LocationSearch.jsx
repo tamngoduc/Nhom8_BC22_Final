@@ -1,62 +1,25 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-// // react icons
-import { IoSearchCircleSharp } from "react-icons/io5";
-import { pink } from "@mui/material/colors";
-
-const choices = [
-  { id: 1, text: "Anywhere" },
-  { id: 2, text: "Any week" },
-  { id: 3, text: "Add guest", withIcon: true },
-];
+import InputBase from "@mui/material/InputBase";
+import IconButton from "@mui/material/IconButton";
+import { FaSearch } from "react-icons/fa";
 
 const LocationSearch = () => {
   return (
     <Paper
+      component="form"
       sx={{
-        borderRadius: 20,
-        ml: 15,
+        p: "2px 4px",
+        display: "flex",
+        alignItems: "center",
+        width: 400,
+        border: "1px solid #ccc",
       }}
-      elevation={3}
     >
-      <Stack
-        sx={{
-          borderRadius: 20,
-          pl: 2,
-        }}
-        divider={<Divider orientation="vertical" flexItem />}
-      >
-        {choices.map((choice) => {
-          return (
-            <Button key={choice.id}>
-              <Typography
-                sx={{
-                  color: (theme) => theme.palette.text.primary,
-                  fontWeight: "bold",
-                }}
-              >
-                {choice.text}
-              </Typography>
-              {choice.withIcon && (
-                <Box
-                  sx={{
-                    ml: 1,
-                    mt: 1,
-                    mr: 1,
-                  }}
-                >
-                  <IoSearchCircleSharp color={pink[500]} size={32} />
-                </Box>
-              )}
-            </Button>
-          );
-        })}
-      </Stack>
+      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Where to go"></InputBase>
+      <IconButton sx={{ p: "10px" }}>
+        <FaSearch />
+      </IconButton>
     </Paper>
   );
 };

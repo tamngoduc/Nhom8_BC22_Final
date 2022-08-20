@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// rút gọn link api
 const axiosClient = axios.create({
   baseURL: "https://airbnb.cybersoft.edu.vn/api",
   headers: {
@@ -8,6 +9,7 @@ const axiosClient = axios.create({
   },
 });
 
+// 
 axiosClient.interceptors.response.use(
   (response) => {
     return response.data;
@@ -17,6 +19,7 @@ axiosClient.interceptors.response.use(
   }
 );
 
+// 
 axiosClient.interceptors.request.use((config) => {
   const user = localStorage.getItem("user");
   if (user) {

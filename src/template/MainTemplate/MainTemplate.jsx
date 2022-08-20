@@ -2,10 +2,11 @@ import { Box } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { displayOnDesktop } from "../../themes/comonStyles";
+import CarouselCard from "./Carousel/CarouselCard";
+import LocationCard from "./Carousel/LocationCard";
 import Footer from "./Footer/Footer";
 import FooterMenu from "./Footer/FooterMenu";
 import Header from "./Header/Header";
-
 const MainTemplate = () => {
   return (
     <Box
@@ -26,9 +27,11 @@ const MainTemplate = () => {
           flexGrow: 1,
           height: 100,
           overflowY: "scroll",
+          overflowX: "none",
         }}
       >
         <Outlet />
+        <LocationCard />
       </Box>
 
       <Box sx={{ display: { xs: "flex", md: "none" } }}>
