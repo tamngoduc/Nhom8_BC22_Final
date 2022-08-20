@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 
 const authAPI = {
   login: (loginUser) => {
-    return axiosClient.post("auth.login", loginUser);
+    return axiosClient.post("auth/login", loginUser);
   },
 
   register: (registerUser) => {
