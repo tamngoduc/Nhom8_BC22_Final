@@ -2,8 +2,6 @@ import { Box, Container } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { displayOnDesktop } from "../../themes/comonStyles";
-import CarouselCard from "./Carousel/CarouselCard";
-import LocationCard from "./Carousel/LocationCard";
 import Footer from "./Footer/Footer";
 import FooterMenu from "./Footer/FooterMenu";
 import MobileFooter from "./Footer/MobileFooter";
@@ -41,7 +39,6 @@ const MainTemplate = () => {
             <MobileFooter />
           </Box>
         </Container>
-        <LocationCard />
       </Box>
 
       <Box sx={{ display: { xs: "flex", md: "none" } }}>

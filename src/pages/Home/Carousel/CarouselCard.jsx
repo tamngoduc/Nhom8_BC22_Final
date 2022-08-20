@@ -1,17 +1,10 @@
 import React from "react";
-
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import MobileStepper from "@mui/material/MobileStepper";
-import { location as cardLocations } from "../../../data/fakeApiforHome";
-
-// mui icons
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-// 3rd party
-
-// react icons
 import { AiFillStar } from "react-icons/ai";
 import { FaRegHeart } from "react-icons/fa";
 import {
@@ -19,7 +12,6 @@ import {
   dFlex,
   carouselDot,
   fixedIcon,
-  carouselImage,
   fixedBottom,
 } from "../../../themes/comonStyles";
 import "./CarouselCard.css";
