@@ -1,62 +1,83 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
-// // react icons
-import { IoSearchCircleSharp } from "react-icons/io5";
-import { pink } from "@mui/material/colors";
-
-const choices = [
-  { id: 1, text: "Anywhere" },
-  { id: 2, text: "Any week" },
-  { id: 3, text: "Add guest", withIcon: true },
-];
+import IconButton from "@mui/material/IconButton";
+import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { getLocationsList } from "../../../slices/location";
+import { Autocomplete, TextField } from "@mui/material";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
 const LocationSearch = () => {
+  const { locationsList } = useSelector((state) => state.location);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  let display = "none";
+  const handleSearch = (e) => {
+    if (
+      e.target.value !== "" &&
+      e.target.value !== " " &&
+      e.target.value.length > 1
+    ) {
+      display = "display";
+    } else {
+      display = "none";
+    }
+  };
+
+  useEffect(() => {
+    if (!locationsList.length) {
+      dispatch(getLocationsList(""));
+    }
+  }, []);
+
   return (
     <Paper
+      component="form"
       sx={{
-        borderRadius: 20,
-        ml: 15,
+        p: "2px 4px",
+        display: "flex",
+        alignItems: "center",
+        width: 400,
       }}
-      elevation={3}
     >
-      <Stack
-        sx={{
-          borderRadius: 20,
-          pl: 2,
+      <IconButton sx={{ p: "10px" }}>
+        <FaSearch />
+      </IconButton>
+
+      <Autocomplete
+        selectOnFocus
+        clearOnBlur
+        handleHomeEndKeys
+        options={locationsList}
+        getOptionLabel={(option) => {
+          if (option.inputValue) {
+            return option.inputValue;
+          }
+          return option.name || "";
         }}
-        divider={<Divider orientation="vertical" flexItem />}
-      >
-        {choices.map((choice) => {
-          return (
-            <Button key={choice.id}>
-              <Typography
-                sx={{
-                  color: (theme) => theme.palette.text.primary,
-                  fontWeight: "bold",
-                }}
-              >
-                {choice.text}
-              </Typography>
-              {choice.withIcon && (
-                <Box
-                  sx={{
-                    ml: 1,
-                    mt: 1,
-                    mr: 1,
-                  }}
-                >
-                  <IoSearchCircleSharp color={pink[500]} size={32} />
-                </Box>
-              )}
-            </Button>
-          );
-        })}
-      </Stack>
+        renderOption={(props, option) =>
+          display === "display" && (
+            <li
+              {...props}
+              key={option._id}
+              onClick={() => {
+                navigate(`/rooms/${option._id}`);
+                display = "none";
+              }}
+            >
+              <LocationOnOutlinedIcon />
+
+              {option.name}
+            </li>
+          )
+        }
+        sx={{ width: 300 }}
+        freeSolo
+        renderInput={(params) => (
+          <TextField {...params} label="Where to go" onChange={handleSearch} />
+        )}
+      />
     </Paper>
   );
 };
