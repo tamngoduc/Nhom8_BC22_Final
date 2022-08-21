@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getLocationsList } from "../../../slices/location";
+import { getLocationsList } from "../../slices/location";
 import { Autocomplete, TextField } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 

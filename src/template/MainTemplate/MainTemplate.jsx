@@ -6,7 +6,6 @@ import Footer from "./Footer/Footer";
 import FooterMenu from "./Footer/FooterMenu";
 import MobileFooter from "./Footer/MobileFooter";
 import Header from "./Header/Header";
-
 const MainTemplate = () => {
   return (
     <Box

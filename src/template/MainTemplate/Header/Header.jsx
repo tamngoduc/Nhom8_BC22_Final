@@ -2,9 +2,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Logo from "./Logo";
-import LocationSearch from "./LocationSearch";
+import LocationSearch from "../../../Component/LocationSearch/LocationSearch";
 import ProfileSetting from "./ProfileSetting";
-import MobileSearch from "./MobileSearch";
 import {
   flexBetweenCenter,
   dFlex,
@@ -28,19 +27,16 @@ const Header = () => {
             px: 4,
           }}
         >
-          {/* normal header */}
           <Box sx={displayOnDesktop}>
             <Logo />
           </Box>
-          <Box sx={displayOnDesktop}>
+
+          <Box>
             <LocationSearch />
           </Box>
+
           <Box sx={displayOnDesktop}>
             <ProfileSetting />
-          </Box>
-          {/*  searchBar responsive header */}
-          <Box sx={{ display: { sx: "flex", md: "none" } }}>
-            <MobileSearch />
           </Box>
         </Box>
       </Container>
