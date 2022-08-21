@@ -1,18 +1,13 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
-import MobileStepper from "@mui/material/MobileStepper";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { AiFillStar } from "react-icons/ai";
 import { FaRegHeart } from "react-icons/fa";
 import {
   flexBetween,
   dFlex,
-  carouselDot,
   fixedIcon,
-  fixedBottom,
+  carouselImage,
 } from "../../../themes/comonStyles";
 import "./CarouselCard.css";
 const CarouselCard = ({ location }) => {
@@ -28,31 +23,13 @@ const CarouselCard = ({ location }) => {
         <FaRegHeart size={24} color="#fff" />
       </Box>
 
-      <Box axis={"x"} enableMouseEvents>
-        <Box
-          borderRadius="solid 2px"
-          width="100%"
-          component="img"
-          src={location.locationImages}
-        ></Box>
-      </Box>
-
-      <Box sx={fixedBottom}>
-        <MobileStepper
-          sx={{ backgroundColor: "transparent" }}
-          position="static"
-          nextButton={
-            <Button size="small" sx={carouselDot}>
-              <KeyboardArrowRight />
-            </Button>
-          }
-          backButton={
-            <Button size="small" sx={carouselDot}>
-              <KeyboardArrowLeft />
-            </Button>
-          }
-        />
-      </Box>
+      <Box
+        borderRadius="solid 2px"
+        width="100%"
+        component="img"
+        src={location.locationImages}
+        sx={carouselImage}
+      />
 
       <Box sx={flexBetween}>
         <Box sx={{ mt: 2 }}>
@@ -62,17 +39,10 @@ const CarouselCard = ({ location }) => {
         </Box>
         <Box sx={{ mt: 2 }}>
           <Box sx={dFlex}>
-            {location.isNew ? (
-              <React.Fragment>
-                <Typography component="h5">New</Typography>
-                <AiFillStar size={18} />
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <Typography component="h5"> {location.rating}</Typography>
-                <AiFillStar size={18} />
-              </React.Fragment>
-            )}
+            <React.Fragment>
+              <Typography component="h5"> {location.rating}</Typography>
+              <AiFillStar size={18} />
+            </React.Fragment>
           </Box>
         </Box>
       </Box>

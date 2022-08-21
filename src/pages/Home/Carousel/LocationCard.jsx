@@ -14,15 +14,7 @@ const LocationCard = () => {
       <Grid container rowSpacing={3} columnSpacing={3}>
         {cards.map((location) => {
           return (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              spacing={3}
-              key={location.id}
-            >
+            <Grid item xs={12} sm={6} md={4} lg={3} key={location.id}>
               <CarouselCard location={location} />
             </Grid>
           );

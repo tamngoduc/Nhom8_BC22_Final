@@ -5,6 +5,7 @@ import MainTemplate from "./template/MainTemplate/MainTemplate";
 import Home from "./pages/Home/Home";
 import theme from "./themes/appThemeProvider";
 import RoomsList from "./pages/RoomsList/RoomsList";
+import RoomBooking from "./pages/RoomBooking/RoomBooking";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<MainTemplate />}>
             <Route index element={<Home />} />
             <Route path="rooms/:locationId" element={<RoomsList />} />
+            <Route path="booking/:roomId" element={<RoomBooking />} />
           </Route>
         </Routes>
       </ThemeProvider>
