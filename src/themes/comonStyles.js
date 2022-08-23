@@ -4,6 +4,10 @@ export const flexBetween = {
   display: "flex",
   justifyContent: "space-between",
 };
+export const flexAround = {
+  display: "flex",
+  justifyContent: "space-around",
+};
 
 export const flexBetweenCenter = {
   display: "flex",
