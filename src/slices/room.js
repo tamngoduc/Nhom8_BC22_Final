@@ -13,6 +13,18 @@ const initialState = {
   bookingResponse: {},
   isBookingResponseLoading: false,
   bookingResponseError: null,
+
+  updatedRoomResponse: {},
+  isUpdatedRoomResponseLoading: false,
+  updatedRoomError: null,
+
+  deletedRoomResponse: {},
+  isDeletedRoomResponseLoading: false,
+  deletedRoomError: null,
+
+  uploadedRoomImageResponse: {},
+  isUploadedRoomImageResponseLoading: false,
+  uploadedRoomImageError: null,
 };
 
 export const getRoomsList = createAsyncThunk(
@@ -44,6 +56,42 @@ export const bookRoom = createAsyncThunk(
   async (bookingData) => {
     try {
       const data = await roomAPI.bookRoom(bookingData);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const updateRoom = createAsyncThunk(
+  "room/updateRoom",
+  async (roomId, room) => {
+    try {
+      const data = await roomAPI.updateRoom(roomId, room);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const deleteRoom = createAsyncThunk(
+  "room/deleteRoom",
+  async (roomId) => {
+    try {
+      const data = await roomAPI.deleteRoom(roomId);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const uploadRoomImage = createAsyncThunk(
+  "room/uploadRoomImage",
+  async (roomId, room) => {
+    try {
+      const data = await roomAPI.uploadRoomImage(roomId, room);
       return data;
     } catch (error) {
       throw error;
@@ -103,6 +151,72 @@ const roomSlice = createSlice({
         ...state,
         isBookingResponseLoading: false,
         bookingResponseError: error.message,
+      };
+    });
+
+    builder.addCase(updateRoom.pending, (state) => {
+      return {
+        ...state,
+        isUpdatedRoomResponseLoading: true,
+        updatedRoomError: null,
+      };
+    });
+    builder.addCase(updateRoom.fulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        isUpdatedRoomResponseLoading: false,
+        updatedRoomResponse: payload,
+      };
+    });
+    builder.addCase(updateRoom.rejected, (state, { error }) => {
+      return {
+        ...state,
+        isUpdatedRoomResponseLoading: false,
+        updatedRoomError: error.message,
+      };
+    });
+
+    builder.addCase(deleteRoom.pending, (state) => {
+      return {
+        ...state,
+        isDeletedRoomResponseLoading: true,
+        deletedRoomError: null,
+      };
+    });
+    builder.addCase(deleteRoom.fulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        isDeletedRoomResponseLoading: false,
+        deletedRoomResponse: payload,
+      };
+    });
+    builder.addCase(deleteRoom.rejected, (state, { error }) => {
+      return {
+        ...state,
+        isDeletedRoomResponseLoading: false,
+        deletedRoomError: error.message,
+      };
+    });
+
+    builder.addCase(uploadRoomImage.pending, (state) => {
+      return {
+        ...state,
+        isUploadedRoomImageResponseLoading: true,
+        uploadedRoomImageError: null,
+      };
+    });
+    builder.addCase(uploadRoomImage.fulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        isUploadedRoomImageResponseLoading: false,
+        uploadedRoomImageResponse: payload,
+      };
+    });
+    builder.addCase(uploadRoomImage.rejected, (state, { error }) => {
+      return {
+        ...state,
+        isUploadedRoomImageResponseLoading: false,
+        uploadedRoomImageError: error.message,
       };
     });
   },

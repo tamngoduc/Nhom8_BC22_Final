@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Logo from "./Logo";
-import LocationSearch from "../../../Component/LocationSearch/LocationSearch";
+import LocationSearch from "../../../components/LocationSearch/LocationSearch";
 import ProfileSetting from "./ProfileSetting";
 import {
   flexBetweenCenter,

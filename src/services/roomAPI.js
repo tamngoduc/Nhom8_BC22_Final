@@ -30,7 +30,7 @@ const roomAPI = {
     for (const key in room) {
       formData.append(key, room[key]);
     }
-    return axiosClient.post(`rooms/upload-image/${roomId}`);
+    return axiosClient.post(`rooms/upload-image/${roomId}`, formData);
   },
 };
 
