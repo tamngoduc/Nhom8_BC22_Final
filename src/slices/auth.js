@@ -14,13 +14,14 @@ const initialState = {
 export const login = createAsyncThunk("auth/login", async (loginUser) => {
   try {
     const data = await authAPI.login(loginUser);
+    localStorage.setItem("user", JSON.stringify(data));
     return data;
   } catch (error) {
     throw error;
   }
 });
 
-export const register = createAsyncThunk(
+export const registerAccount = createAsyncThunk(
   "auth/register",
   async (registerUser) => {
     try {
@@ -52,13 +53,13 @@ const authSlice = createSlice({
       return { ...state, isLoginLoading: false, loginError: error.message };
     });
 
-    builder.addCase(register.pending, (state) => {
+    builder.addCase(registerAccount.pending, (state) => {
       return { ...state, isLoginLoading: true, loginError: null };
     });
-    builder.addCase(register.fulfilled, (state, { payload }) => {
+    builder.addCase(registerAccount.fulfilled, (state, { payload }) => {
       return { ...state, isLoginLoading: false, registerUser: payload };
     });
-    builder.addCase(register.rejected, (state, { error }) => {
+    builder.addCase(registerAccount.rejected, (state, { error }) => {
       return { ...state, isLoginLoading: false, registerError: error.message };
     });
   },
