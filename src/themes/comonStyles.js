@@ -73,3 +73,17 @@ export const carouselImage = {
   width: "100%",
   borderRadius: 3,
 };
+
+export const authButton = {
+  fontSize: "15px",
+  textDecoration: "none",
+  marginLeft: "5px",
+};
+
+export const authBlur = {
+  boxShadow: "0 0 1rem 0 rgba(0, 0, 0, .2)",
+  borderRadius: "15px",
+  backgroundColor: "rgba(255, 255, 255, .6)",
+  backdropFilter: "blur(15px)",
+  mx: 4,
+};

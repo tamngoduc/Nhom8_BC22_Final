@@ -1,14 +1,16 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { Routes, Route, BrowserRouter, Link } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import MainTemplate from "./template/MainTemplate/MainTemplate";
 import Home from "./pages/Home/Home";
 import theme from "./themes/appThemeProvider";
 import RoomsList from "./pages/RoomsList/RoomsList";
 import RoomBooking from "./pages/RoomBooking/RoomBooking";
-import SignInSide from "./pages/SignIn/SignIn";
+import AuthTemplate from "./template/MainTemplate/AuthTemplate/AuthTemplate";
+import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
-function App() {
+
+const App = () => {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -19,12 +21,14 @@ function App() {
             <Route path="rooms/:locationId" element={<RoomsList />} />
             <Route path="booking/:roomId" element={<RoomBooking />} />
           </Route>
-          <Route path="/sign-in" element={<SignInSide />} />
-          <Route path="/sign-up" element={<SignUp />} />
+          <Route element={<AuthTemplate />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/sign-up" element={<SignUp />} />
+          </Route>
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
