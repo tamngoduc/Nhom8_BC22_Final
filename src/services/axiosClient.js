@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "../slices/store";
 
 const axiosClient = axios.create({
   baseURL: "https://airbnb.cybersoft.edu.vn/api",

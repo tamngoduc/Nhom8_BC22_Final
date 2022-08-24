@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getRoomDetails } from "../../slices/room";
