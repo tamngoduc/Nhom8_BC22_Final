@@ -14,6 +14,7 @@ const initialState = {
 export const login = createAsyncThunk("auth/login", async (loginUser) => {
   try {
     const data = await authAPI.login(loginUser);
+    localStorage.setItem("user", JSON.stringify(data));
     return data;
   } catch (error) {
     throw error;

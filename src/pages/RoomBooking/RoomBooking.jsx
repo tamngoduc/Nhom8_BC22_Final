@@ -47,7 +47,7 @@ const RoomBooking = () => {
       </Box>
 
       <Box sx={{ my: 2 }}>
-        <Grid container spacing={12}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={7} lg={8}>
             <RoomDetails />
           </Grid>
