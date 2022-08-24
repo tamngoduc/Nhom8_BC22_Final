@@ -1,18 +1,18 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { BsGlobe } from "react-icons/bs";
-import { FaRegUserCircle, FaUserPlus } from "react-icons/fa";
+import { FaRegUserCircle } from "react-icons/fa";
 import { flexCenter } from "../../../themes/comonStyles";
+import { Link } from "react-router-dom";
 
 const ProfileSetting = () => {
   return (
     <Box sx={flexCenter}>
       <Stack>
         <Button>
-          <Link href="#">Become a Host</Link>
+          <Button href="#">Become a Host</Button>
           <BsGlobe size={24} />
         </Button>
       </Stack>
