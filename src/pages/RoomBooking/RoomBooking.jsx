@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getRoomDetails } from "../../slices/room";
@@ -47,7 +47,7 @@ const RoomBooking = () => {
       </Box>
 
       <Box sx={{ my: 2 }}>
-        <Grid container spacing={12}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={7} lg={8}>
             <RoomDetails />
           </Grid>
