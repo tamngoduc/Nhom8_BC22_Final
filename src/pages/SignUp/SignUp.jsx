@@ -47,6 +47,7 @@ export default function SignUp() {
   if (Object.keys(registerUser).length) {
     return <Navigate to="/sign-in" replace />;
   }
+  // nguyen duc long
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
