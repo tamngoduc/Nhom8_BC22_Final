@@ -9,35 +9,92 @@ import {
   FaRegUserCircle,
   FaUserPlus,
 } from "react-icons/fa";
-
-const footerMenu = [
-  { id: 1, text: "Explore", icon: <FaSearch size={18} /> },
-  { id: 2, text: "Wishlist", icon: <FaRegHeart size={18} /> },
-  { id: 3, text: "Login", icon: <FaRegUserCircle size={18} /> },
-  { id: 4, text: "Sign up", icon: <FaUserPlus size={18} /> },
-];
+import { GrLogout } from "react-icons/gr";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { logout } from "../../../slices/auth";
+import { Avatar } from "@mui/material";
+import { authButton } from "../../../themes/comonStyles";
 
 const FooterMenu = () => {
+  const { currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const handleUser = () => {
+    return <Navigate to="/user-profile" />;
+  };
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <Box sx={{ display: "flex", justifyContent: "center", flexGrow: 1 }}>
       <Stack>
-        {footerMenu.map((item) => {
-          return (
-            <Button key={item.id}>
-              <Stack
-                sx={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                direction="column"
-                spacing={1}
-              >
-                {item.icon}
-                <Typography>{item.text}</Typography>
-              </Stack>
-            </Button>
-          );
-        })}
+        {Object.keys(currentUser).length ? (
+          <Button onClick={handleUser}>
+            <Stack
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              direction="column"
+              spacing={1}
+            >
+              <Avatar
+                src={currentUser.avatar ? currentUser.avatar : null}
+                sx={{ mr: 1, width: 18, height: 18 }}
+              />
+              <Typography>{currentUser.user?.name}</Typography>
+            </Stack>
+          </Button>
+        ) : (
+          <Button>
+            <Stack
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              direction="column"
+              spacing={1}
+            >
+              <FaRegUserCircle size={18} />
+              <Link style={authButton} to="/login">
+                Login
+              </Link>
+            </Stack>
+          </Button>
+        )}
+
+        {Object.keys(currentUser).length ? (
+          <Button onClick={handleLogout}>
+            <Stack
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              direction="column"
+              spacing={1}
+            >
+              <GrLogout size={24} />
+              Logout
+            </Stack>
+          </Button>
+        ) : (
+          <Button>
+            <Stack
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              direction="column"
+              spacing={1}
+            >
+              <FaUserPlus size={18} />
+              <Link style={authButton} to="/sign-up">
+                Sign Up
+              </Link>
+            </Stack>
+          </Button>
+        )}
       </Stack>
     </Box>
   );
