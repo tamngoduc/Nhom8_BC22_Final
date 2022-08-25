@@ -21,7 +21,7 @@ const RoomsList = () => {
     return <Box>{roomsListError}</Box>;
   }
   return (
-    <Box sx={{ mx: 2 }}>
+    <Box sx={{ mx: 4 }}>
       <Typography variant="subtitle1" sx={{ py: 2, fontWeight: "bold" }}>
         {/* <Pluralize singular={"stay"} count={roomsList.length} /> */}
       </Typography>

@@ -3,12 +3,18 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { FaSearch, FaRegHeart, FaRegUserCircle } from "react-icons/fa";
+import {
+  FaSearch,
+  FaRegHeart,
+  FaRegUserCircle,
+  FaUserPlus,
+} from "react-icons/fa";
 
 const footerMenu = [
   { id: 1, text: "Explore", icon: <FaSearch size={18} /> },
   { id: 2, text: "Wishlist", icon: <FaRegHeart size={18} /> },
   { id: 3, text: "Login", icon: <FaRegUserCircle size={18} /> },
+  { id: 4, text: "Sign up", icon: <FaUserPlus size={18} /> },
 ];
 
 const FooterMenu = () => {

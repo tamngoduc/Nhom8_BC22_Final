@@ -15,7 +15,7 @@ const RoomCard = ({ room }) => {
         cursor: "pointer",
         "&:hover": { opacity: 0.8 },
       }}
-      onClick={() => navigate(`/room/${room._id}`)}
+      onClick={() => navigate(`/booking/${room._id}`)}
     >
       <Box
         component="img"
