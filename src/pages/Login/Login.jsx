@@ -25,11 +25,10 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { account: "", password: "" },
+    defaultValues: { email: "", password: "" },
     mode: "onTouched",
   });
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(login(data));
   };
   const onError = (errors) => {
@@ -65,18 +64,18 @@ const Login = () => {
           <TextField
             required
             fullWidth
-            id="account"
-            label="Account"
-            name="account"
-            autoComplete="account"
-            {...register("account", {
+            type="email"
+            id="email"
+            label="Email"
+            name="email"
+            {...register("email", {
               required: {
                 value: true,
-                message: "Please input your account!",
+                message: "Please input your email!",
               },
             })}
-            error={!!errors?.account}
-            helperText={errors?.account ? errors.account.message : null}
+            error={!!errors?.email}
+            helperText={errors?.email ? errors.email.message : null}
           />
           <br />
           <br />
@@ -88,17 +87,11 @@ const Login = () => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="new-password"
             {...register("password", {
               required: {
                 value: true,
                 message: "Please input your password!",
               },
-              // pattern: {
-              //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-              //   message:
-              //     "Minimum eight characters, at least one letter and one number !",
-              // },
             })}
             error={!!errors?.password}
             helperText={errors?.password ? errors.password.message : null}
@@ -116,7 +109,7 @@ const Login = () => {
             color="error"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Login
           </Button>
         </form>
 

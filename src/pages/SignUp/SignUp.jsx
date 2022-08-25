@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,32 +24,37 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       name: "",
       email: "",
       phoneNumber: "",
-      account: "",
       password: "",
+      repass: "",
     },
     mode: "onTouched",
   });
+  const password = watch("password");
   const { enqueueSnackbar } = useSnackbar();
   const successAlert = (variant) => {
     enqueueSnackbar("Register successfully!", { variant });
   };
-  const errorAlert = (variant) => {
-    enqueueSnackbar(`${errors}`, { variant });
-  };
   const onSubmit = (data) => {
     dispatch(registerAccount(data));
   };
-  const onError = () => {
-    errorAlert("error");
+  const onError = (errors) => {
+    console.log(errors);
   };
+
+  useEffect(() => {
+    if (Object.keys(registerUser).length) {
+      successAlert("success");
+    }
+  }, [registerUser]);
+
   if (Object.keys(registerUser).length) {
-    successAlert("success");
     return <Navigate to="/login" replace />;
   }
 
@@ -67,7 +72,7 @@ const SignUp = () => {
         <Avatar sx={{ m: 1, bgcolor: "red" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{ fontWeight: "bold" }}>
           Sign up
         </Typography>
         <br />
@@ -77,11 +82,10 @@ const SignUp = () => {
               <TextField
                 required
                 fullWidth
-                name="repass"
+                name="name"
                 label="Name"
-                type="name"
+                type="text"
                 id="name"
-                autoComplete="new-password"
                 {...register("name", {
                   required: {
                     value: true,
@@ -105,7 +109,6 @@ const SignUp = () => {
                 label="Email"
                 type="email"
                 id="email"
-                autoComplete="email"
                 {...register("email", {
                   required: {
                     value: true,
@@ -113,7 +116,7 @@ const SignUp = () => {
                   },
                   pattern: {
                     value:
-                      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+                      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
                     message: "Your email is not correct!",
                   },
                 })}
@@ -125,43 +128,22 @@ const SignUp = () => {
               <TextField
                 required
                 fullWidth
-                name="phoneNumber"
+                name="phone"
                 label="Phone Number"
-                type="phoneNumber"
-                id="phoneNumber"
-                autoComplete="new-password"
-                {...register("phoneNumber", {
+                type="number"
+                id="phone"
+                {...register("phone", {
                   required: {
                     value: true,
                     message: "Please input your Phone number!",
                   },
                   pattern: {
-                    value: /^[0-9\-\+]{9,15}$/,
+                    value: /^[0-9\-+]{9,15}$/,
                     message: "Your phone number is not correct!",
                   },
                 })}
-                error={!!errors?.phoneNumber}
-                helperText={
-                  errors?.phoneNumber ? errors.phoneNumber.message : null
-                }
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <TextField
-                required
-                fullWidth
-                id="account"
-                label="Account"
-                name="account"
-                autoComplete="account"
-                {...register("account", {
-                  required: {
-                    value: true,
-                    message: "Please input your account!",
-                  },
-                })}
-                error={!!errors?.account}
-                helperText={errors?.account ? errors.account.message : null}
+                error={!!errors?.phone}
+                helperText={errors?.phone ? errors.phone.message : null}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -172,7 +154,6 @@ const SignUp = () => {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="new-password"
                 {...register("password", {
                   required: {
                     value: true,
@@ -186,6 +167,26 @@ const SignUp = () => {
                 })}
                 error={!!errors?.password}
                 helperText={errors?.password ? errors.password.message : null}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                required
+                fullWidth
+                name="repass"
+                label="Confirm Password"
+                type="password"
+                id="repass"
+                {...register("repass", {
+                  required: {
+                    value: true,
+                    message: "Please confirm your password!",
+                  },
+                  validate: (value) =>
+                    value === password || "Password do not match!",
+                })}
+                error={!!errors?.repass}
+                helperText={errors?.repass ? errors.repass.message : null}
               />
             </Grid>
           </Grid>
@@ -213,7 +214,7 @@ const SignUp = () => {
               style={{ textDecoration: "none" }}
               to="/login"
             >
-              Already have an account? Sign in
+              Already have an account? Login
             </Link>
           </Grid>
         </Grid>

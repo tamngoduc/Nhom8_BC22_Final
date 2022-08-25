@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography, useMediaQuery } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getRoomDetails } from "../../slices/room";
@@ -10,12 +10,14 @@ import Pluralize from "react-pluralize";
 import Payment from "./Payment/Payment";
 import RoomDetails from "./RoomDetails/RoomDetails";
 import Review from "./Review/Review";
+import theme from "../../themes/appThemeProvider";
 
 const RoomBooking = () => {
   const { roomDetails, roomDetailsError } = useSelector((state) => state.room);
   const { reviewsList } = useSelector((state) => state.review);
   const { roomId } = useParams();
   const dispatch = useDispatch();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     dispatch(getRoomDetails(roomId));
@@ -47,7 +49,7 @@ const RoomBooking = () => {
       </Box>
 
       <Box sx={{ my: 2 }}>
-        <Grid container spacing={3}>
+        <Grid container spacing={isMobile ? 3 : 12}>
           <Grid item xs={12} sm={12} md={7} lg={8}>
             <RoomDetails />
           </Grid>

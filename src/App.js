@@ -6,9 +6,10 @@ import Home from "./pages/Home/Home";
 import theme from "./themes/appThemeProvider";
 import RoomsList from "./pages/RoomsList/RoomsList";
 import RoomBooking from "./pages/RoomBooking/RoomBooking";
-import AuthTemplate from "./template/MainTemplate/AuthTemplate/AuthTemplate";
+import AuthTemplate from "./template/AuthTemplate/AuthTemplate";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
+import NotFound from "./pages/NotFound/NotFound";
 
 const App = () => {
   return (
@@ -21,10 +22,13 @@ const App = () => {
             <Route path="rooms/:locationId" element={<RoomsList />} />
             <Route path="booking/:roomId" element={<RoomBooking />} />
           </Route>
+
           <Route element={<AuthTemplate />}>
             <Route path="/login" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
           </Route>
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-// import Pluralize from "react-pluralize";
+import Pluralize from "react-pluralize";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { flexBetween, dFlex, carouselImage } from "../../themes/comonStyles";
@@ -27,11 +27,11 @@ const RoomCard = ({ room }) => {
         <Box sx={{ mt: 2 }}>
           <Typography variant="h6">{room.name}</Typography>
           <Typography variant="subtitle2">
-            {/* <Pluralize singular={"guest"} count={room.guests} /> */}
+            <Pluralize singular={"guest"} count={room.guests} />
             <span> - </span>
-            {/* <Pluralize singular={"bed room"} count={room.bedRoom} /> */}
+            <Pluralize singular={"bed room"} count={room.bedRoom} />
             <span> - </span>
-            {/* <Pluralize singular={"bath"} count={room.bath} /> */}
+            <Pluralize singular={"bath"} count={room.bath} />
           </Typography>
           <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
             {room.price} VND Night
