@@ -1,11 +1,12 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Link } from "react-router-dom";
 import MainTemplate from "./template/MainTemplate/MainTemplate";
 import Home from "./pages/Home/Home";
 import theme from "./themes/appThemeProvider";
 import RoomsList from "./pages/RoomsList/RoomsList";
-
+import SignInSide from "./pages/SignIn/SignIn";
+import SignUp from "./pages/SignUp/SignUp";
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +17,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="rooms/:locationId" element={<RoomsList />} />
           </Route>
+          <Route path="/sign-in" element={<SignInSide />} />
+          <Route path="/sign-up" element={<SignUp />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
