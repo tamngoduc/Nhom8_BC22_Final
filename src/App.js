@@ -10,6 +10,7 @@ import AuthTemplate from "./template/AuthTemplate/AuthTemplate";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import NotFound from "./pages/NotFound/NotFound";
+import UserProfile from "./pages/UserProfile/UserProfile";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="rooms/:locationId" element={<RoomsList />} />
             <Route path="booking/:roomId" element={<RoomBooking />} />
+            <Route path="account" element={<UserProfile />} />
           </Route>
 
           <Route element={<AuthTemplate />}>

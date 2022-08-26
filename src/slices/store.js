@@ -4,6 +4,7 @@ import auth from "./auth";
 import room from "./room";
 import user from "./user";
 import review from "./review";
+import ticket from "./ticket";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     room,
     user,
     review,
+    ticket,
   },
 });
 

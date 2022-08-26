@@ -3,15 +3,10 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {
-  FaSearch,
-  FaRegHeart,
-  FaRegUserCircle,
-  FaUserPlus,
-} from "react-icons/fa";
+import { FaRegUserCircle, FaUserPlus } from "react-icons/fa";
 import { GrLogout } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../../slices/auth";
 import { Avatar } from "@mui/material";
 import { authButton } from "../../../themes/comonStyles";
@@ -19,9 +14,7 @@ import { authButton } from "../../../themes/comonStyles";
 const FooterMenu = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const handleUser = () => {
-    return <Navigate to="/user-profile" />;
-  };
+  const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -30,36 +23,34 @@ const FooterMenu = () => {
     <Box sx={{ display: "flex", justifyContent: "center", flexGrow: 1 }}>
       <Stack>
         {Object.keys(currentUser).length ? (
-          <Button onClick={handleUser}>
+          <Button onClick={() => navigate("/account")}>
             <Stack
               sx={{
                 justifyContent: "center",
                 alignItems: "center",
               }}
               direction="column"
-              spacing={1}
+              spacing={0}
             >
               <Avatar
                 src={currentUser.avatar ? currentUser.avatar : null}
-                sx={{ mr: 1, width: 18, height: 18 }}
+                sx={{ width: 18, height: 18 }}
               />
               <Typography>{currentUser.user?.name}</Typography>
             </Stack>
           </Button>
         ) : (
-          <Button>
+          <Button onClick={() => navigate("/login")}>
             <Stack
               sx={{
                 justifyContent: "center",
                 alignItems: "center",
               }}
               direction="column"
-              spacing={1}
+              spacing={0}
             >
               <FaRegUserCircle size={18} />
-              <Link style={authButton} to="/login">
-                Login
-              </Link>
+              <Typography>Login</Typography>
             </Stack>
           </Button>
         )}
@@ -72,26 +63,24 @@ const FooterMenu = () => {
                 alignItems: "center",
               }}
               direction="column"
-              spacing={1}
+              spacing={0}
             >
               <GrLogout size={24} />
-              Logout
+              <Typography>Logout</Typography>
             </Stack>
           </Button>
         ) : (
-          <Button>
+          <Button onClick={() => navigate("/sign-up")}>
             <Stack
               sx={{
                 justifyContent: "center",
                 alignItems: "center",
               }}
               direction="column"
-              spacing={1}
+              spacing={0}
             >
               <FaUserPlus size={18} />
-              <Link style={authButton} to="/sign-up">
-                Sign Up
-              </Link>
+              <Typography>Sign Up</Typography>
             </Stack>
           </Button>
         )}
