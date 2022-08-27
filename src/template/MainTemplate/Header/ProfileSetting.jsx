@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { BsGlobe } from "react-icons/bs";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaUserPlus } from "react-icons/fa";
 import { flexCenter } from "../../../themes/comonStyles";
 import { Link } from "react-router-dom";
 

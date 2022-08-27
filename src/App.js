@@ -8,6 +8,7 @@ import RoomsList from "./pages/RoomsList/RoomsList";
 import RoomBooking from "./pages/RoomBooking/RoomBooking";
 import SignInSide from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
+import Dashboard from "./pages/DashBoard/Dashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
           </Route>
           <Route path="/sign-in" element={<SignInSide />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/dashBoard" element={<Dashboard />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
