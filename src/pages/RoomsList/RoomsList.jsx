@@ -3,13 +3,11 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getRoomsList } from "../../slices/room";
-// import Pluralize from "react-pluralize";
+import Pluralize from "react-pluralize";
 import RoomCard from "./RoomCard";
 
 const RoomsList = () => {
-  const { roomsList, isRoomsListLoading, roomsListError } = useSelector(
-    (state) => state.room
-  );
+  const { roomsList, roomsListError } = useSelector((state) => state.room);
   const { locationId } = useParams();
   const dispatch = useDispatch();
 
@@ -23,7 +21,7 @@ const RoomsList = () => {
   return (
     <Box sx={{ mx: 4 }}>
       <Typography variant="subtitle1" sx={{ py: 2, fontWeight: "bold" }}>
-        {/* <Pluralize singular={"stay"} count={roomsList.length} /> */}
+        <Pluralize singular={"stay"} count={roomsList.length} />
       </Typography>
       <Typography variant="h3" sx={{ pb: 3 }}>
         Stays nearby

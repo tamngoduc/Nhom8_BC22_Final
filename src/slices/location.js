@@ -22,7 +22,7 @@ export const getLocationsList = createAsyncThunk(
 const locationSlice = createSlice({
   name: "location",
   initialState,
-  reducer: {},
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getLocationsList.pending, (state) => {
       return {

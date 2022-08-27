@@ -22,7 +22,7 @@ export const getReviewsList = createAsyncThunk(
 const reviewSlice = createSlice({
   name: "review",
   initialState,
-  reducer: {},
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getReviewsList.pending, (state) => {
       return { ...state, isReviewsListLoading: true, reviewsListError: null };

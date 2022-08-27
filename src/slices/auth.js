@@ -2,7 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authAPI from "../services/authAPI";
 
 const initialState = {
-  currentUser: JSON.parse(localStorage.getItem("user")) || {},
+  currentUser: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : {},
   isLoginLoading: false,
   loginError: null,
 
@@ -36,10 +38,18 @@ export const registerAccount = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducer: {
+  reducers: {
     logout: (state) => {
       localStorage.removeItem("user");
-      return { ...state, currentUser: {} };
+      state.currentUser = {};
+      state.isLoginLoading = false;
+      state.loginError = null;
+      // return {
+      //   ...state,
+      //   currentUser: {},
+      //   isLoginLoading: false,
+      //   loginError: null,
+      // };
     },
   },
   extraReducers: (builder) => {
