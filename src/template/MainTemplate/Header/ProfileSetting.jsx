@@ -60,7 +60,6 @@ const ProfileSetting = () => {
           >
             <FaUserPlus size={24} />
             <Typography>Sign Up</Typography>
-            {/* <Link style={authButton} to="/sign-up"></Link> */}
           </Button>
         )}
       </Stack>

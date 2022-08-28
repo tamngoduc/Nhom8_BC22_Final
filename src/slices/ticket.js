@@ -5,6 +5,10 @@ const initialState = {
   ticketsList: [],
   isTicketsListLoading: false,
   ticketsListError: null,
+
+  createdTicketResponse: {},
+  isCreatedTicketResponseLoading: false,
+  createdTicketResponseError: null,
 };
 
 export const getTicketsList = createAsyncThunk(
@@ -12,6 +16,18 @@ export const getTicketsList = createAsyncThunk(
   async (userId) => {
     try {
       const data = await ticketAPI.getTickets(userId);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const createTicket = createAsyncThunk(
+  "ticket/createTicket",
+  async (ticket) => {
+    try {
+      const data = await ticketAPI.createTicket(ticket);
       return data;
     } catch (error) {
       throw error;
@@ -35,6 +51,28 @@ const ticketSlice = createSlice({
         ...state,
         isTicketsListLoading: false,
         ticketsListError: error.message,
+      };
+    });
+
+    builder.addCase(createTicket.pending, (state) => {
+      return {
+        ...state,
+        isCreatedTicketResponseLoading: true,
+        createdTicketResponseError: null,
+      };
+    });
+    builder.addCase(createTicket.fulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        isCreatedTicketResponseLoading: false,
+        createdTicketResponse: payload,
+      };
+    });
+    builder.addCase(createTicket.rejected, (state, { error }) => {
+      return {
+        ...state,
+        isCreatedTicketResponseLoading: false,
+        createdTicketResponseError: error.message,
       };
     });
   },

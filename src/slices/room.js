@@ -25,6 +25,10 @@ const initialState = {
   uploadedRoomImageResponse: {},
   isUploadedRoomImageResponseLoading: false,
   uploadedRoomImageError: null,
+
+  createdRoomResponse: {},
+  isCreatedRoomResponseLoading: false,
+  createdRoomResponseError: null,
 };
 
 export const getRoomsList = createAsyncThunk(
@@ -98,6 +102,15 @@ export const uploadRoomImage = createAsyncThunk(
     }
   }
 );
+
+export const createRoom = createAsyncThunk("room/createRoom", async (room) => {
+  try {
+    const data = await roomAPI.createRoom(room);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+});
 
 const roomSlice = createSlice({
   name: "room",
@@ -217,6 +230,28 @@ const roomSlice = createSlice({
         ...state,
         isUploadedRoomImageResponseLoading: false,
         uploadedRoomImageError: error.message,
+      };
+    });
+
+    builder.addCase(createRoom.pending, (state) => {
+      return {
+        ...state,
+        isCreatedRoomResponseLoading: true,
+        createdRoomResponseError: null,
+      };
+    });
+    builder.addCase(createRoom.fulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        isCreatedRoomResponseLoading: false,
+        createdRoomResponse: payload,
+      };
+    });
+    builder.addCase(createRoom.rejected, (state, { error }) => {
+      return {
+        ...state,
+        isCreatedRoomResponseLoading: false,
+        createdRoomResponseError: error.message,
       };
     });
   },
