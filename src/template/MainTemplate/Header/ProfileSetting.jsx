@@ -7,17 +7,15 @@ import Stack from "@mui/material/Stack";
 import { BsGlobe } from "react-icons/bs";
 import { FaRegUserCircle, FaUserPlus } from "react-icons/fa";
 import { GrLogout } from "react-icons/gr";
-import { Link, Navigate } from "react-router-dom";
-import { authButton, flexCenter } from "../../../themes/comonStyles";
+import { useNavigate } from "react-router-dom";
+import { flexCenter } from "../../../themes/comonStyles";
 import { Avatar } from "@mui/material";
 import { logout } from "../../../slices/auth";
 
 const ProfileSetting = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const handleUser = () => {
-    return <Navigate to="/user-profile" />;
-  };
+  const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -33,36 +31,35 @@ const ProfileSetting = () => {
 
       <Stack justifyContent="flex-end">
         {Object.keys(currentUser).length ? (
-          <Button onClick={handleUser}>
-            <Avatar
-              src={currentUser.avatar ? currentUser.avatar : null}
-              sx={{ mr: 1 }}
-            />
+          <Button onClick={() => navigate("/account")}>
+            <Avatar src={currentUser.avatar ? currentUser.avatar : null} />
             <Typography>{currentUser.user?.name}</Typography>
           </Button>
         ) : (
-          <Button sx={{ boderRadius: 10, border: "1px solid #ddd" }}>
+          <Button
+            sx={{ boderRadius: 10, border: "1px solid #ddd" }}
+            onClick={() => navigate("/login")}
+          >
             <FaRegUserCircle size={24} />
-            <Link style={authButton} to="/login">
-              Login
-            </Link>
+            <Typography>Login</Typography>
           </Button>
         )}
 
         {Object.keys(currentUser).length ? (
           <Button
             sx={{ boderRadius: 10, border: "1px solid #ddd" }}
-            onClick={() => dispatch(logout())}
+            onClick={handleLogout}
           >
             <GrLogout size={24} />
-            Logout
+            <Typography>Logout</Typography>
           </Button>
         ) : (
-          <Button sx={{ boderRadius: 10, border: "1px solid #ddd" }}>
+          <Button
+            sx={{ boderRadius: 10, border: "1px solid #ddd" }}
+            onClick={() => navigate("/sign-up")}
+          >
             <FaUserPlus size={24} />
-            <Link style={authButton} to="/sign-up">
-              Sign Up
-            </Link>
+            <Typography>Sign Up</Typography>
           </Button>
         )}
       </Stack>

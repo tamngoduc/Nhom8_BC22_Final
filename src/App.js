@@ -10,7 +10,12 @@ import AuthTemplate from "./template/AuthTemplate/AuthTemplate";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import NotFound from "./pages/NotFound/NotFound";
-import Dashboard from "./pages/DashBoard/Dashboard";
+import UserProfile from "./pages/UserProfile/UserProfile";
+import AdminTemplate from "./template/AdminTemplate/AdminTemplate";
+import UsersManagement from "./pages/UserManangement/UserManagement";
+import LocationsManagement from "./pages/LocationsManagement/LocationsManagement";
+import RoomsManagement from "./pages/RoomsManagement/RoomsManagement";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -21,12 +26,18 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="rooms/:locationId" element={<RoomsList />} />
             <Route path="booking/:roomId" element={<RoomBooking />} />
+            <Route path="account" element={<UserProfile />} />
           </Route>
-          <Route path="/dashboard" element={<Dashboard />} />
 
           <Route element={<AuthTemplate />}>
             <Route path="/login" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
+          </Route>
+
+          <Route path="/admin" element={<AdminTemplate />}>
+            <Route path="users" element={<UsersManagement />} />
+            <Route path="rooms" element={<RoomsManagement />} />
+            <Route path="locations" element={<LocationsManagement />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

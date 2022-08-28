@@ -4,36 +4,13 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import BasicPagination from "./Panigation";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import { Typography } from "@mui/material";
-function createData(id, name, image, description) {
-  return { id, name, image, description };
-}
+import { Pagination, Stack, Typography } from "@mui/material";
 
-const rows = [
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-];
-
-export default function LocationBoard() {
+const LocationsManagement = () => {
   return (
     <React.Fragment>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -50,7 +27,7 @@ export default function LocationBoard() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {/* {rows.map((row) => (
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.name}</TableCell>
@@ -68,11 +45,16 @@ export default function LocationBoard() {
                 </IconButton>
               </TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
       <br />
-      <BasicPagination />
+      {/* <BasicPagination /> */}
+      <Stack spacing={2}>
+        <Pagination count={10} />
+      </Stack>
     </React.Fragment>
   );
-}
+};
+
+export default LocationsManagement;

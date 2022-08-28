@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -17,59 +18,61 @@ import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems } from "./ListItem";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Outlet } from "react-router-dom";
-const drawerWidth = 240;
+import { Avatar } from "@mui/material";
+import ListItemBar from "./ListItemBar/ListItemBar";
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+const AdminTemplate = () => {
+  const drawerWidth = 240;
+
+  const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== "open",
+  })(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.leavingScreen,
     }),
-  }),
-}));
+    ...(open && {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    }),
+  }));
 
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  "& .MuiDrawer-paper": {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    boxSizing: "border-box",
-    ...(!open && {
-      overflowX: "hidden",
+  const Drawer = styled(MuiDrawer, {
+    shouldForwardProp: (prop) => prop !== "open",
+  })(({ theme, open }) => ({
+    "& .MuiDrawer-paper": {
+      position: "relative",
+      whiteSpace: "nowrap",
+      width: drawerWidth,
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: theme.transitions.duration.enteringScreen,
       }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
-      },
-    }),
-  },
-}));
+      boxSizing: "border-box",
+      ...(!open && {
+        overflowX: "hidden",
+        transition: theme.transitions.create("width", {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up("sm")]: {
+          width: theme.spacing(9),
+        },
+      }),
+    },
+  }));
 
-const mdTheme = createTheme();
-
-function DashboardContent() {
+  const mdTheme = createTheme();
+  const { currentUser } = useSelector((state) => state.auth);
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -97,14 +100,17 @@ function DashboardContent() {
             >
               <MenuIcon />
             </IconButton>
+            <Avatar
+              src={currentUser.user?.avatar ? currentUser.user?.avatar : null}
+            />
             <Typography
               component="h1"
               variant="h6"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, mx: 1 }}
             >
-              Dashboard
+              {currentUser.user?.name}
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -128,7 +134,9 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
 
-          <List component="nav">{mainListItems}</List>
+          <List component="nav">
+            <ListItemBar />
+          </List>
         </Drawer>
         <Box
           component="main"
@@ -177,10 +185,8 @@ function DashboardContent() {
       </Box>
     </ThemeProvider>
   );
-}
+};
 
-export default function Dashboard() {
-  return <DashboardContent />;
-}
+export default AdminTemplate;
 
 const arrSearch = [];
