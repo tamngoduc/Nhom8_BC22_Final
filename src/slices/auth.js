@@ -41,15 +41,12 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem("user");
-      state.currentUser = {};
-      state.isLoginLoading = false;
-      state.loginError = null;
-      // return {
-      //   ...state,
-      //   currentUser: {},
-      //   isLoginLoading: false,
-      //   loginError: null,
-      // };
+      return {
+        ...state,
+        currentUser: {},
+        isLoginLoading: false,
+        loginError: null,
+      };
     },
   },
   extraReducers: (builder) => {

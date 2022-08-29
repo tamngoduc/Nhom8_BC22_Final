@@ -51,6 +51,10 @@ const RoomDetails = () => {
       </Box>
       <Divider sx={{ my: 4 }} />
       <Box>
+        <Typography variant="body">{roomDetails.description}</Typography>
+      </Box>
+      <Divider sx={{ my: 4 }} />
+      <Box>
         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
           Amenities
         </Typography>

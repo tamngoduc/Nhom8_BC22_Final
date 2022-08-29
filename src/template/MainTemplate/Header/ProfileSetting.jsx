@@ -32,7 +32,9 @@ const ProfileSetting = () => {
       <Stack justifyContent="flex-end">
         {Object.keys(currentUser).length ? (
           <Button onClick={() => navigate("/account")}>
-            <Avatar src={currentUser.avatar ? currentUser.avatar : null} />
+            <Avatar
+              src={currentUser.user?.avatar ? currentUser.user?.avatar : null}
+            />
             <Typography>{currentUser.user?.name}</Typography>
           </Button>
         ) : (
