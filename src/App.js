@@ -16,6 +16,7 @@ import UsersManagement from "./pages/UserManangement/UserManagement";
 import LocationsManagement from "./pages/LocationsManagement/LocationsManagement";
 import RoomsManagement from "./pages/RoomsManagement/RoomsManagement";
 
+import ResponsiveAppBar from "./pages/Profile/Profile";
 const App = () => {
   return (
     <BrowserRouter>
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="booking/:roomId" element={<RoomBooking />} />
             <Route path="account" element={<UserProfile />} />
           </Route>
+          <Route path="/profile" element={<ResponsiveAppBar />} />
 
           <Route element={<AuthTemplate />}>
             <Route path="/login" element={<Login />} />
