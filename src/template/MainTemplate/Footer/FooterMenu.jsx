@@ -3,12 +3,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {
-  FaSearch,
-  FaRegHeart,
-  FaRegUserCircle,
-  FaUserPlus,
-} from "react-icons/fa";
+import { FaRegUserCircle, FaUserPlus } from "react-icons/fa";
 import { GrLogout } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";

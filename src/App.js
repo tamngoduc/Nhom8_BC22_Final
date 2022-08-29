@@ -11,6 +11,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import NotFound from "./pages/NotFound/NotFound";
 import Dashboard from "./pages/DashBoard/Dashboard";
+import ResponsiveAppBar from "./pages/Profile/Profile";
 const App = () => {
   return (
     <BrowserRouter>
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="booking/:roomId" element={<RoomBooking />} />
           </Route>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<ResponsiveAppBar />} />
 
           <Route element={<AuthTemplate />}>
             <Route path="/login" element={<Login />} />
