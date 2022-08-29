@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -11,22 +12,21 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Outlet } from "react-router-dom";
-import { Avatar } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import ListItemBar from "./ListItemBar/ListItemBar";
+import { logout } from "../../slices/auth";
 
 const AdminTemplate = () => {
   const drawerWidth = 240;
-
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
@@ -74,6 +74,13 @@ const AdminTemplate = () => {
   const mdTheme = createTheme();
   const { currentUser } = useSelector((state) => state.auth);
   const [open, setOpen] = React.useState(true);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+  if (!Object.keys(currentUser).length) {
+    return <Navigate to="/" replace />;
+  }
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -112,11 +119,11 @@ const AdminTemplate = () => {
             >
               {currentUser.user?.name}
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <Tooltip title="Logout">
+              <IconButton color="inherit" onClick={handleLogout}>
+                <LogoutOutlinedIcon />
+              </IconButton>
+            </Tooltip>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
