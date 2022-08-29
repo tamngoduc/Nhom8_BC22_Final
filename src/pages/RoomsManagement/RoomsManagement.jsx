@@ -4,58 +4,37 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import BasicPagination from "./Panigation";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import { Typography } from "@mui/material";
-function createData(id, name, image, description) {
-  return { id, name, image, description };
-}
+import { Pagination, Stack, Typography } from "@mui/material";
 
-const rows = [
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-  createData(0, "HaLong", "None", "Bay"),
-];
-
-export default function LocationBoard() {
+const RoomsManagement = () => {
   return (
     <React.Fragment>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        Location Management
+        Room Management
       </Typography>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell>Name</TableCell>
+            <TableCell>Room Id</TableCell>
+            <TableCell>Room Name</TableCell>
             <TableCell>Image</TableCell>
-            <TableCell>Description</TableCell>
+            <TableCell>Location</TableCell>
+            <TableCell>Guest Max</TableCell>
             <TableCell>Manipulation</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {/* {rows.map((row) => (
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.image}</TableCell>
-              <TableCell>{row.description}</TableCell>
+              <TableCell>{row.location}</TableCell>
+              <TableCell>{row.guestMax}</TableCell>
               <TableCell>
                 <IconButton color="success" aria-label="delete">
                   <VisibilityRoundedIcon />
@@ -68,11 +47,15 @@ export default function LocationBoard() {
                 </IconButton>
               </TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
       <br />
-      <BasicPagination />
+      <Stack spacing={2}>
+        <Pagination count={10} />
+      </Stack>
     </React.Fragment>
   );
-}
+};
+
+export default RoomsManagement;
