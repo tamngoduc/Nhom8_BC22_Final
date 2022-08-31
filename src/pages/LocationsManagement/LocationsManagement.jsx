@@ -8,7 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
-import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import {
   Box,
   CircularProgress,
@@ -19,9 +18,12 @@ import {
 import { getLocationsList } from "../../slices/location";
 
 const LocationsManagement = () => {
-  const { locationsList } = useSelector((state) => state.location);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const { locationsList, isLocationsListLoading } = useSelector(
+    (state) => state.location
+  );
+  const pages = [10, 25, 50];
   const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(pages[page]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -43,7 +45,7 @@ const LocationsManagement = () => {
         Location Management
       </Typography>
 
-      {!locationsList.length ? (
+      {isLocationsListLoading ? (
         <Box
           sx={{
             display: "flex",
@@ -70,7 +72,13 @@ const LocationsManagement = () => {
                 .map((location) => (
                   <TableRow key={location._id}>
                     <TableCell>{location.name}</TableCell>
-                    <TableCell>{location.image}</TableCell>
+                    <TableCell>
+                      <Box
+                        component="img"
+                        src={location.image}
+                        sx={{ maxWidth: 50, width: "auto" }}
+                      />
+                    </TableCell>
                     <TableCell>{location.province}</TableCell>
                     <TableCell>
                       <IconButton color="warning" aria-label="delete">
@@ -87,7 +95,7 @@ const LocationsManagement = () => {
           <br />
           <Stack spacing={2}>
             <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={pages}
               component="div"
               count={locationsList.length}
               rowsPerPage={rowsPerPage}
