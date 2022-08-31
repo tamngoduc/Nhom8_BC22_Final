@@ -7,8 +7,8 @@ const initialState = {
   ticketsListError: null,
 
   createdTicketResponse: {},
-  isCreatedTicketResponseLoading: false,
-  createdTicketResponseError: null,
+  isCreatedTicketLoading: false,
+  createdTicketError: null,
 };
 
 export const getTicketsList = createAsyncThunk(
@@ -57,22 +57,22 @@ const ticketSlice = createSlice({
     builder.addCase(createTicket.pending, (state) => {
       return {
         ...state,
-        isCreatedTicketResponseLoading: true,
-        createdTicketResponseError: null,
+        isCreatedTicketLoading: true,
+        createdTicketError: null,
       };
     });
     builder.addCase(createTicket.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        isCreatedTicketResponseLoading: false,
+        isCreatedTicketLoading: false,
         createdTicketResponse: payload,
       };
     });
     builder.addCase(createTicket.rejected, (state, { error }) => {
       return {
         ...state,
-        isCreatedTicketResponseLoading: false,
-        createdTicketResponseError: error.message,
+        isCreatedTicketLoading: false,
+        createdTicketError: error.message,
       };
     });
   },

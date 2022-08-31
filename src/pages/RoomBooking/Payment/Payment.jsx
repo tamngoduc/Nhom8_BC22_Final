@@ -14,7 +14,7 @@ import { bookRoom } from "../../../slices/room";
 import { createTicket } from "../../../slices/ticket";
 
 const Payment = () => {
-  const { roomDetails, bookingResponse, bookingResponseError } = useSelector(
+  const { roomDetails, bookingResponse, bookingError } = useSelector(
     (state) => state.room
   );
   const { reviewsList } = useSelector((state) => state.review);
@@ -41,17 +41,20 @@ const Payment = () => {
     enqueueSnackbar(`${bookingResponse?.message}`, { variant });
   };
   const errorAlert = (variant) => {
-    enqueueSnackbar(`${bookingResponseError?._message}`, { variant });
+    enqueueSnackbar(`${bookingError?._message}`, { variant });
   };
 
   useEffect(() => {
     if (Object.keys(bookingResponse).length) {
       successAlert("success");
     }
-    if (bookingResponseError?.length) {
+  }, [bookingResponse]);
+
+  useEffect(() => {
+    if (bookingError?.length) {
       errorAlert("error");
     }
-  }, [bookingResponse, bookingResponseError]);
+  }, [bookingError]);
 
   return (
     <Paper elevation={12} sx={{ borderRadius: 5 }}>
