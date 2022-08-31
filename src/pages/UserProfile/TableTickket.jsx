@@ -21,12 +21,12 @@ export default function TableTicket() {
   return (
     <TableContainer component={Paper}>
       <Table
-        style={{ border: "2px solid black" }}
+        className="table_ticket"
         sx={{ minWidth: 500 }}
         aria-label="simple table"
       >
-        <TableHead>
-          <TableRow style={{ color: "black" }}>
+        <TableHead className="table_ticket_head">
+          <TableRow>
             <TableCell>Place</TableCell>
             <TableCell>Time</TableCell>
             <TableCell>Image</TableCell>
