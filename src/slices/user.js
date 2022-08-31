@@ -11,16 +11,16 @@ const initialState = {
   usersListError: null,
 
   updatedUserResponse: {},
-  isUpdatedUserResponseLoading: false,
-  updatedUserResponseError: null,
+  isUpdatedUserLoading: false,
+  updatedUserError: null,
 
   deletedUserResponse: {},
-  isDeletedUserResponseLoading: false,
-  deletedUserResponseError: null,
+  isDeletedUserLoading: false,
+  deletedUserError: null,
 
   addedUserResponse: {},
-  isAddedUserResponseLoading: false,
-  addedUserResponseError: null,
+  isAddedUserLoading: false,
+  addedUserError: null,
 };
 
 export const getUserDetails = createAsyncThunk(
@@ -113,66 +113,66 @@ const userSlice = createSlice({
     builder.addCase(updateUser.pending, (state) => {
       return {
         ...state,
-        isUpdatedUserResponseLoading: true,
-        updatedUserResponseError: null,
+        isUpdatedUserLoading: true,
+        updatedUserError: null,
       };
     });
     builder.addCase(updateUser.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        isUpdatedUserResponseLoading: false,
+        isUpdatedUserLoading: false,
         updatedUserResponse: payload,
       };
     });
     builder.addCase(updateUser.rejected, (state, { error }) => {
       return {
         ...state,
-        isUpdatedUserResponseLoading: false,
-        updatedUserResponseError: error.message,
+        isUpdatedUserLoading: false,
+        updatedUserError: error.message,
       };
     });
 
     builder.addCase(deleteUser.pending, (state) => {
       return {
         ...state,
-        isDeletedUserResponseLoading: true,
-        deletedUserResponseError: null,
+        isDeletedUserLoading: true,
+        deletedUserError: null,
       };
     });
     builder.addCase(deleteUser.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        isDeletedUserResponseLoading: false,
+        isDeletedUserLoading: false,
         deletedUserResponse: payload,
       };
     });
     builder.addCase(deleteUser.rejected, (state, { error }) => {
       return {
         ...state,
-        isDeletedUserResponseLoading: false,
-        deletedUserResponseError: error.message,
+        isDeletedUserLoading: false,
+        deletedUserError: error.message,
       };
     });
 
     builder.addCase(addUser.pending, (state) => {
       return {
         ...state,
-        isAddedUserResponseLoading: true,
-        addedUserResponseError: null,
+        isAddedUserLoading: true,
+        addedUserError: null,
       };
     });
     builder.addCase(addUser.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        isAddedUserResponseLoading: false,
+        isAddedUserLoading: false,
         addedUserResponse: payload,
       };
     });
     builder.addCase(addUser.rejected, (state, { error }) => {
       return {
         ...state,
-        isAddedUserResponseLoading: false,
-        addedUserResponseError: error.message,
+        isAddedUserLoading: false,
+        addedUserError: error.message,
       };
     });
   },

@@ -1,37 +1,27 @@
 import * as React from "react";
 import MUIDataTable from "mui-datatables";
 import { useSnackbar } from "notistack";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
-import {
-  Box,
-  CircularProgress,
-  Stack,
-  TablePagination,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteRoom, getRoomsList } from "../../slices/room";
 
 const RoomsManagement = () => {
-  const { roomsList } = useSelector((state) => state.room);
-  const pages = [10, 25, 50];
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(pages[page]);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const {
+    roomsList,
+    isRoomsListLoading,
+    deletedRoomResponse,
+    deletedRoomError,
+  } = useSelector((state) => state.room);
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const successDelete = (variant) => {
+    enqueueSnackbar("Delete room successfully!", { variant });
+  };
+  const errorDelete = (variant) => {
+    enqueueSnackbar(`${deletedRoomError}`, { variant });
+  };
   const columns = [
     {
       name: "name",
@@ -40,15 +30,46 @@ const RoomsManagement = () => {
     {
       name: "image",
       label: "Image",
-      customBodyRender: (value, tableMeta, updateValue) => {},
+      options: {
+        customBodyRender: (value) => {
+          return (
+            <Box
+              component="img"
+              src={value}
+              sx={{ maxWidth: 50, width: "auto" }}
+            />
+          );
+        },
+      },
     },
     {
-      name: "locationId.name",
+      name: "locationId",
       label: "Location",
+      options: {
+        customBodyRender: (value) => {
+          return <Box>{value ? `${value.name}, ${value.province}` : null}</Box>;
+        },
+      },
     },
     {
-      name: "address",
-      label: "Address",
+      name: "guests",
+      label: "Guests",
+    },
+    {
+      name: "bedRoom",
+      label: "Bed room",
+    },
+    {
+      name: "bath",
+      label: "Bath",
+    },
+    {
+      name: "description",
+      label: "Description",
+    },
+    {
+      name: "price",
+      label: "Price",
     },
     {
       name: "Manipulation",
@@ -79,8 +100,8 @@ const RoomsManagement = () => {
     responsive: "vertical",
     rowsPerPage: 10,
     onRowsDelete: (rowsDeleted) => {
-      const userId = rowsDeleted.data.map((d) => roomsList[d.dataIndex]._id);
-      dispatch(deleteRoom(userId));
+      const roomId = rowsDeleted.data.map((d) => roomsList[d.dataIndex]._id);
+      dispatch(deleteRoom(roomId));
     },
   };
 
@@ -89,14 +110,21 @@ const RoomsManagement = () => {
       dispatch(getRoomsList(""));
     }
   }, []);
+  React.useEffect(() => {
+    if (Object.keys(deletedRoomResponse).length) {
+      successDelete("success");
+      dispatch(getRoomsList(""));
+    }
+  }, [deletedRoomResponse]);
+  React.useEffect(() => {
+    if (deletedRoomError) {
+      errorDelete("error");
+    }
+  }, [deletedRoomError]);
 
   return (
     <React.Fragment>
-      {/* <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        Room Management
-      </Typography> */}
-
-      {!roomsList.length ? (
+      {isRoomsListLoading ? (
         <Box
           sx={{
             display: "flex",
@@ -107,63 +135,12 @@ const RoomsManagement = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <React.Fragment>
-          <MUIDataTable
-            title={"Room Management"}
-            data={roomsList}
-            columns={columns}
-            options={options}
-          />
-          {/* <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Image</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Manipulation</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {roomsList
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((room) => (
-                  <TableRow key={room._id}>
-                    <TableCell>{room.name}</TableCell>
-                    <TableCell>
-                      <Box
-                        component="img"
-                        src={room.image}
-                        sx={{ maxWidth: 50, width: "auto" }}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      {room.locationId?.name}, {room.locationId?.province}
-                    </TableCell>
-                    <TableCell>
-                      <IconButton color="warning" aria-label="delete">
-                        <BuildRoundedIcon />
-                      </IconButton>
-                      <IconButton color="error" aria-label="delete">
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table> */}
-          <br />
-          <Stack spacing={2}>
-            <TablePagination
-              rowsPerPageOptions={pages}
-              component="div"
-              count={roomsList.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Stack>
-        </React.Fragment>
+        <MUIDataTable
+          title={"Room Management"}
+          data={roomsList}
+          columns={columns}
+          options={options}
+        />
       )}
     </React.Fragment>
   );

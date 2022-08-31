@@ -11,20 +11,20 @@ const initialState = {
   locationDetailsError: null,
 
   updatedLocationResponse: {},
-  isUpdatedLocationResponseLoading: false,
+  isUpdatedLocationLoading: false,
   updatedLocationError: null,
 
   deletedLocationResponse: {},
-  isDeletedLocationResponseLoading: false,
+  isDeletedLocationLoading: false,
   deletedLocationError: null,
 
   uploadedLocationImageResponse: {},
-  isUploadedLocationImageResponseLoading: false,
+  isUploadedLocationImageLoading: false,
   uploadedLocationImageError: null,
 
   createdLocationResponse: {},
-  isCreatedLocationResponseLoading: false,
-  createdLocationResponseError: null,
+  isCreatedLocationLoading: false,
+  createdLocationError: null,
 };
 
 export const getLocationsList = createAsyncThunk(
@@ -151,21 +151,21 @@ const locationSlice = createSlice({
     builder.addCase(updateLocation.pending, (state) => {
       return {
         ...state,
-        isUpdatedLocationResponseLoading: true,
+        isUpdatedLocationLoading: true,
         updatedLocationError: null,
       };
     });
     builder.addCase(updateLocation.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        isUpdatedLocationResponseLoading: false,
+        isUpdatedLocationLoading: false,
         updatedLocationResponse: payload,
       };
     });
     builder.addCase(updateLocation.rejected, (state, { error }) => {
       return {
         ...state,
-        isUpdatedLocationResponseLoading: false,
+        isUpdatedLocationLoading: false,
         updatedLocationError: error.message,
       };
     });
@@ -173,21 +173,21 @@ const locationSlice = createSlice({
     builder.addCase(deleteLocation.pending, (state) => {
       return {
         ...state,
-        isDeletedLocationResponseLoading: true,
+        isDeletedLocationLoading: true,
         deletedLocationError: null,
       };
     });
     builder.addCase(deleteLocation.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        isDeletedLocationResponseLoading: false,
+        isDeletedLocationLoading: false,
         deletedLocationResponse: payload,
       };
     });
     builder.addCase(deleteLocation.rejected, (state, { error }) => {
       return {
         ...state,
-        isDeletedLocationResponseLoading: false,
+        isDeletedLocationLoading: false,
         deletedLocationError: error.message,
       };
     });
@@ -195,21 +195,21 @@ const locationSlice = createSlice({
     builder.addCase(uploadLocationImage.pending, (state) => {
       return {
         ...state,
-        isUploadedLocationImageResponseLoading: true,
+        isUploadedLocationImageLoading: true,
         uploadedLocationImageError: null,
       };
     });
     builder.addCase(uploadLocationImage.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        isUploadedLocationImageResponseLoading: false,
+        isUploadedLocationImageLoading: false,
         uploadedLocationImageResponse: payload,
       };
     });
     builder.addCase(uploadLocationImage.rejected, (state, { error }) => {
       return {
         ...state,
-        isUploadedLocationImageResponseLoading: false,
+        isUploadedLocationImageLoading: false,
         uploadedLocationImageError: error.message,
       };
     });
@@ -217,22 +217,22 @@ const locationSlice = createSlice({
     builder.addCase(createLocation.pending, (state) => {
       return {
         ...state,
-        isCreatedLocationResponseLoading: true,
-        createdLocationResponseError: null,
+        isCreatedLocationLoading: true,
+        createdLocationError: null,
       };
     });
     builder.addCase(createLocation.fulfilled, (state, { payload }) => {
       return {
         ...state,
-        isCreatedLocationResponseLoading: false,
+        isCreatedLocationLoading: false,
         createdLocationResponse: payload,
       };
     });
     builder.addCase(createLocation.rejected, (state, { error }) => {
       return {
         ...state,
-        isCreatedLocationResponseLoading: false,
-        createdLocationResponseError: error.message,
+        isCreatedLocationLoading: false,
+        createdLocationError: error.message,
       };
     });
   },
