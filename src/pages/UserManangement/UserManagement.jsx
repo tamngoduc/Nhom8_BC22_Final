@@ -1,5 +1,8 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import MUIDataTable from "mui-datatables";
+import { useSnackbar } from "notistack";
+import { deleteUser, getUsersList } from "../../slices/user";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,21 +17,87 @@ import {
   TablePagination,
   Typography,
 } from "@mui/material";
-import { getUsersList } from "../../slices/user";
 import { Stack } from "@mui/system";
 
 const UsersManagement = () => {
-  const { usersList } = useSelector((state) => state.user);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [page, setPage] = React.useState(0);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const {
+    usersList,
+    isUsersListLoading,
+    deletedUserResponse,
+    deletedUserResponseError,
+  } = useSelector((state) => state.user);
+  // const pages = [10, 25, 50];
+  // const [page, setPage] = React.useState(0);
+  // const [rowsPerPage, setRowsPerPage] = React.useState(pages[page]);
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // };
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const successDelete = (variant) => {
+    enqueueSnackbar("Delete user successfully!", { variant });
+  };
+  const errorDelete = (variant) => {
+    enqueueSnackbar(`${deletedUserResponseError}`, { variant });
+  };
+  const columns = [
+    {
+      name: "name",
+      label: "Name",
+    },
+    {
+      name: "email",
+      label: "Email",
+    },
+    {
+      name: "phone",
+      label: "Phone",
+    },
+    {
+      name: "address",
+      label: "Address",
+    },
+    {
+      name: "type",
+      label: "Type",
+    },
+    {
+      name: "Manipulation",
+      options: {
+        filter: true,
+        sort: false,
+        empty: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <IconButton
+              color="warning"
+              aria-label="delete"
+              onClick={() =>
+                window.alert(`Clicked "Edit" for row ${tableMeta.rowIndex}`)
+              }
+            >
+              <BuildRoundedIcon />
+            </IconButton>
+          );
+        },
+      },
+    },
+  ];
+  const options = {
+    filter: true,
+    selectableRows: "multiple",
+    filterType: "dropdown",
+    responsive: "vertical",
+    rowsPerPage: 10,
+    onRowsDelete: (rowsDeleted) => {
+      const userId = rowsDeleted.data.map((d) => usersList[d.dataIndex]._id);
+      dispatch(deleteUser(userId));
+    },
+  };
 
   React.useEffect(() => {
     if (!usersList.length) {
@@ -36,13 +105,22 @@ const UsersManagement = () => {
     }
   }, []);
 
+  React.useEffect(() => {
+    if (Object.keys(deletedUserResponse).length) {
+      successDelete("success");
+      dispatch(getUsersList());
+    }
+  }, [deletedUserResponse]);
+
+  React.useEffect(() => {
+    if (deletedUserResponseError) {
+      errorDelete("error");
+    }
+  }, [deletedUserResponseError]);
+
   return (
     <React.Fragment>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        User Management
-      </Typography>
-
-      {!usersList.length ? (
+      {isUsersListLoading ? (
         <Box
           sx={{
             display: "flex",
@@ -54,7 +132,13 @@ const UsersManagement = () => {
         </Box>
       ) : (
         <React.Fragment>
-          <Table size="small">
+          <MUIDataTable
+            title={"User Management"}
+            data={usersList}
+            columns={columns}
+            options={options}
+          />
+          {/* <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
@@ -90,7 +174,7 @@ const UsersManagement = () => {
           <br />
           <Stack spacing={2}>
             <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={pages}
               component="div"
               count={usersList.length}
               rowsPerPage={rowsPerPage}
@@ -98,7 +182,7 @@ const UsersManagement = () => {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-          </Stack>
+          </Stack> */}
         </React.Fragment>
       )}
     </React.Fragment>

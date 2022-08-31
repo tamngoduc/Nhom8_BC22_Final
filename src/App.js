@@ -10,13 +10,12 @@ import AuthTemplate from "./template/AuthTemplate/AuthTemplate";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import NotFound from "./pages/NotFound/NotFound";
-import UserProfile from "./pages/UserProfile/UserProfile";
 import AdminTemplate from "./template/AdminTemplate/AdminTemplate";
 import UsersManagement from "./pages/UserManangement/UserManagement";
 import LocationsManagement from "./pages/LocationsManagement/LocationsManagement";
 import RoomsManagement from "./pages/RoomsManagement/RoomsManagement";
+import UserProfile from "./pages/UserProfile/UserProfile";
 
-import ResponsiveAppBar from "./pages/Profile/Profile";
 const App = () => {
   return (
     <BrowserRouter>
@@ -27,9 +26,8 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="rooms/:locationId" element={<RoomsList />} />
             <Route path="booking/:roomId" element={<RoomBooking />} />
-            <Route path="account" element={<UserProfile />} />
+            <Route path="/account" element={<UserProfile />} />
           </Route>
-          <Route path="/profile" element={<ResponsiveAppBar />} />
 
           <Route element={<AuthTemplate />}>
             <Route path="/login" element={<Login />} />
