@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import { DateRangePicker } from "@mantine/dates";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -9,11 +9,16 @@ import theme from "../../../themes/appThemeProvider";
 import { dFlex, flexBetween } from "../../../themes/comonStyles";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useSnackbar } from "notistack";
 import { bookRoom } from "../../../slices/room";
+import { createTicket } from "../../../slices/ticket";
 
 const Payment = () => {
-  const { roomDetails } = useSelector((state) => state.room);
+  const { roomDetails, bookingResponse, bookingResponseError } = useSelector(
+    (state) => state.room
+  );
   const { reviewsList } = useSelector((state) => state.review);
+  const { currentUser } = useSelector((state) => state.auth);
   const [dateRange, setDateRange] = useState([null, null]);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const date1 = new Date(dateRange[0]).getTime();
@@ -22,13 +27,31 @@ const Payment = () => {
   const total = gap * roomDetails.price;
   const bookingData = {
     roomId: roomDetails._id,
+    userId: currentUser.user?._id,
     checkIn: dateRange[0] ? new Date(dateRange[0]).toISOString() : null,
     checkOut: dateRange[1] ? new Date(dateRange[1]).toISOString() : null,
   };
   const dispatch = useDispatch();
   const handleBooking = (bookingData) => {
     dispatch(bookRoom(bookingData));
+    dispatch(createTicket(bookingData));
   };
+  const { enqueueSnackbar } = useSnackbar();
+  const successAlert = (variant) => {
+    enqueueSnackbar(`${bookingResponse?.message}`, { variant });
+  };
+  const errorAlert = (variant) => {
+    enqueueSnackbar(`${bookingResponseError?._message}`, { variant });
+  };
+
+  useEffect(() => {
+    if (Object.keys(bookingResponse).length) {
+      successAlert("success");
+    }
+    if (bookingResponseError?.length) {
+      errorAlert("error");
+    }
+  }, [bookingResponse, bookingResponseError]);
 
   return (
     <Paper elevation={12} sx={{ borderRadius: 5 }}>
