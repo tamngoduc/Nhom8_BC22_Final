@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Card.css";
-import { Box, Card } from "@mui/material";
+import { Box } from "@mui/material";
 import { Button } from "react-bootstrap";
-function createData(id, name, email, phoneNumber) {
-  return { id, name, email, phoneNumber };
-}
-const in4 = [createData(1, "Duc Long ", "longmkting@gmail.com", "0397827538")];
-// xử lí click edit thì form chồi lên
+import { useSelector, useDispatch } from "react-redux";
+import { getUserDetails } from "../../slices/user";
+import { useParams } from "react-router-dom";
+
+// function createData(id, name, email, phoneNumber) {
+//   return { id, name, email, phoneNumber };
+// }
+// const in4 = [createData(1, "Duc Long ", "longmkting@gmail.com", "0397827538")];
+
 const UserCard = () => {
+  const dispatch = useDispatch();
+  const { userDetails, userDetailsError } = useSelector((state) => state.user);
+  const userId = useParams();
+
+  useEffect(() => {
+    dispatch(getUserDetails(userId));
+  }, [userId]);
+  // xử lí click edit thì form chồi lên
+
   const [btnState, setBtnState] = useState(false);
   function handleClick() {
     setBtnState((btnState) => !btnState);
   }
   const editIn4 = btnState ? "active" : ""; // xử lí click edit thì form chồi lên
-
+  if (userDetailsError) {
+    return <Box>{userDetailsError}</Box>;
+  }
   return (
     <div>
       {/* form */}
@@ -46,8 +61,9 @@ const UserCard = () => {
           </div>
         </div>
       </Box>
+
       {/* card */}
-      <Card className="card Card UserCard">
+      <Box className="card Card UserCard">
         <div className="upper-container">
           <div className="image-container">
             <img
@@ -60,18 +76,17 @@ const UserCard = () => {
         <br />
 
         <div className="card-body lower-container">
-          {in4.map((information) => (
-            <div>
-              <h3>{information.name}</h3>
-              <h4>Email: {information.email}</h4>
-              <h4>Phone: {information.phoneNumber}</h4>
-            </div>
-          ))}
+          <div>
+            <h3>{userDetails.name}</h3>
+            <h4>Email: {userDetails.email}</h4>
+            <h4>Phone: {userDetails.phone}</h4>
+          </div>
         </div>
         <div className="btn">
           <Button onClick={handleClick}>Edit Information</Button>
+          <Button>Admin</Button>
         </div>
-      </Card>
+      </Box>
     </div>
   );
 };
