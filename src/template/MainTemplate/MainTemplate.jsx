@@ -28,9 +28,8 @@ const MainTemplate = () => {
           overflowY: "scroll",
         }}
       >
-        <Container maxWidth="xl" sx={{ mb: 3 }}>
+        <Container maxWidth="xl">
           <Outlet />
-
           <Box
             sx={{
               display: { xs: "flex", md: "none" },

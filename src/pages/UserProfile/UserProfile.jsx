@@ -6,34 +6,39 @@ import TableTicket from "./TableTickket";
 
 const UserProfile = () => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
-      <Box
-        sx={{
-          flexDirection: "column",
-          flexGrow: 1,
-          height: 100,
-          overflowY: "scroll",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        className="bg_img"
-      >
-        <Grid item container>
-          <Grid sx={{ mt: 2 }} item xs={12} sm={12} md={6} lg={4}>
-            <UserCard />
-          </Grid>
-          <Grid sx={{ mt: 10 }} item xs={12} sm={10} md={8} lg={5}>
-            <TableTicket />
-          </Grid>
+    <Box className="bg_img">
+      <Grid item container>
+        <Grid
+          sx={{
+            mt: 2,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={5}
+        >
+          <UserCard />
         </Grid>
-      </Box>
+        <Grid
+          sx={{
+            mt: 10,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          item
+          xs={12}
+          sm={10}
+          md={8}
+          lg={6}
+        >
+          <TableTicket />
+        </Grid>
+      </Grid>
     </Box>
   );
 };
