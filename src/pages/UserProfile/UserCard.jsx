@@ -5,6 +5,8 @@ import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserDetails } from "../../slices/user";
 import { useParams } from "react-router-dom";
+import Grid from "@mui/material";
+import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 
 // function createData(id, name, email, phoneNumber) {
 //   return { id, name, email, phoneNumber };
@@ -19,22 +21,32 @@ const UserCard = () => {
   useEffect(() => {
     dispatch(getUserDetails(userId));
   }, [userId]);
-  // xử lí click edit thì form chồi lên
+
+  // xử lí click edit thì form chồi lên editin4
 
   const [btnState, setBtnState] = useState(false);
-  function handleClick() {
+  function handleClickChangein4() {
     setBtnState((btnState) => !btnState);
   }
-  const editIn4 = btnState ? "active" : ""; // xử lí click edit thì form chồi lên
-  if (userDetailsError) {
-    return <Box>{userDetailsError}</Box>;
+  const editIn4 = btnState ? "active" : "";
+
+  // xử lí click edit thì form chồi lên thay avt
+
+  const [btnAvt, setBtnState2] = useState(false);
+  function handleClickChangeAvt() {
+    setBtnState2((btnAvt) => !btnAvt);
   }
+  const editAvt = btnAvt ? "active" : "";
+
+  // if (userDetailsError) {
+  //   return <Box>{userDetailsError}</Box>;
+  // }
   return (
     <div>
-      {/* form */}
+      {/* form in4 */}
       <Box>
         <div className={`popup ${editIn4}`}>
-          <div onClick={handleClick} className="close-btn ">
+          <div onClick={handleClickChangein4} className="close-btn ">
             &times;
           </div>
           <div className="form">
@@ -61,11 +73,30 @@ const UserCard = () => {
           </div>
         </div>
       </Box>
+      {/* form avatar */}
+      <Box>
+        <div className={`popup ${editAvt}`}>
+          <div onClick={handleClickChangeAvt} className="close-btn ">
+            &times;
+          </div>
+          <div className="form">
+            <h2>Change your avatar</h2>
+
+            <Button className="btn btn-avt">
+              <FileUploadRoundedIcon />
+              Upload Image
+              <input type="file" />
+            </Button>
+
+            <Button className="btn btn-avt-change">Update Avatar</Button>
+          </div>
+        </div>
+      </Box>
 
       {/* card */}
       <Box className="card Card UserCard">
         <div className="upper-container">
-          <div className="image-container">
+          <div onClick={handleClickChangeAvt} className="image-container">
             <img
               src="https://pbs.twimg.com/profile_images/919509936098463744/lmTNN6AO_400x400.jpg"
               className="card-img-top"
@@ -83,7 +114,7 @@ const UserCard = () => {
           </div>
         </div>
         <div className="btn">
-          <Button onClick={handleClick}>Edit Information</Button>
+          <Button onClick={handleClickChangein4}>Edit Information</Button>
           <Button>Admin</Button>
         </div>
       </Box>

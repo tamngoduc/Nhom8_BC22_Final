@@ -165,3 +165,46 @@
   border-radius: 10px;
   cursor: pointer;
 }
+.btn-avt {
+  height: 50px;
+  width: 100%;
+  position: relative;
+  padding: 11px 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  border-radius: 10px;
+  color: #fff;
+  background-color: orange;
+  border: 0;
+  overflow: hidden;
+}
+.btn-avt input[type="file"] {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: scale(5);
+  opacity: 0;
+  transition: 0.3s;
+}
+.btn-avt:hover {
+  background: #d9a400;
+  transition: all 0.5s;
+}
+.btn-avt-change {
+  width: 100%;
+  height: 50px;
+  position: relative;
+  padding: 11px 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #ff0263;
+  border: 0;
+  overflow: hidden;
+}
+.btn-avt-change:hover {
+  transition: all 0.5s;
+  background-color: #da0758;
+}
