@@ -4,7 +4,6 @@ import { Box } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserDetails } from "../../slices/user";
-import { useParams } from "react-router-dom";
 import Grid from "@mui/material";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 
@@ -14,13 +13,13 @@ import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 // const in4 = [createData(1, "Duc Long ", "longmkting@gmail.com", "0397827538")];
 
 const UserCard = () => {
-  const dispatch = useDispatch();
   const { userDetails, userDetailsError } = useSelector((state) => state.user);
-  const userId = useParams();
+  const { currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserDetails(userId));
-  }, [userId]);
+    dispatch(getUserDetails(currentUser._id));
+  }, [currentUser._id]);
 
   // xử lí click edit thì form chồi lên editin4
 
