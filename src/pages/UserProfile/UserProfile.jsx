@@ -7,15 +7,15 @@ import TableTicket from "./TableTickket";
 const UserProfile = () => {
   return (
     <Box className="bg_img">
-      <Grid item container>
+      <Grid container>
         <Grid
+          item
           sx={{
             mt: 2,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
-          item
           xs={12}
           sm={12}
           md={6}
@@ -24,13 +24,13 @@ const UserProfile = () => {
           <UserCard />
         </Grid>
         <Grid
+          item
           sx={{
             mt: 10,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
-          item
           xs={12}
           sm={10}
           md={8}

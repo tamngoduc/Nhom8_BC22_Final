@@ -13,11 +13,11 @@ function createData(id, place, time, image, amount, totalCost) {
 
 const rows = [
   createData(1, "HaLongBay", "22-30/09/2022", "None", "2", "500.000 VND"),
-  createData(1, "HaLongBay", "22-30/09/2022", "None", "2", "500.000 VND"),
-  createData(1, "HaLongBay", "22-30/09/2022", "None", "2", "500.000 VND"),
+  createData(2, "HaLongBay", "22-30/09/2022", "None", "2", "500.000 VND"),
+  createData(3, "HaLongBay", "22-30/09/2022", "None", "2", "500.000 VND"),
 ];
 
-export default function TableTicket() {
+const TableTicket = () => {
   return (
     <TableContainer component={Paper}>
       <Table
@@ -36,7 +36,7 @@ export default function TableTicket() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow>
+            <TableRow key={row.id}>
               <TableCell>{row.place}</TableCell>
               <TableCell>{row.time}</TableCell>
               <TableCell>{row.image}</TableCell>
@@ -48,4 +48,6 @@ export default function TableTicket() {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default TableTicket;
