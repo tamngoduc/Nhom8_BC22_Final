@@ -3,7 +3,7 @@ import "./Card.css";
 import { Box, Grid } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserDetails } from "../../slices/user";
+import { getUserDetails, updateUser } from "../../slices/user";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
@@ -33,24 +33,39 @@ const UserCard = () => {
     },
     mode: "onTouched",
   });
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (user) => {
+    console.log(user);
+    dispatch(updateUser(userId, user));
   };
   const onError = (errors) => {
     console.log(errors);
   };
   // validate//
+  // get user data//
+  const dispatch = useDispatch();
+  const {
+    userDetails,
+    userDetailsError,
+    updatedUserResponse,
+    updatedUserError,
+    isUpdatedUserLoading,
+  } = useSelector((state) => state.user);
+  const userId = useSelector((store) => store.auth.currentUser.user._id);
 
-  const onSelect = (userId) => {
-    console.log(userId);
-  };
+  useEffect(() => {
+    dispatch(getUserDetails(userId));
+  }, [userId]);
+  // const handleClick = (currentUser) => {
+  //   console.log(currentUser);
+  // };
+
   // xử lí click edit thì form chồi lên editin4
 
   const [btnState, setBtnState] = useState(false);
   function handleClickChangein4() {
     setBtnState((btnState) => !btnState);
   }
-  const editIn4 = btnState ? "active" : "";
+  const editIn4 = btnState ? "active" : null;
 
   // xử lí click edit thì form chồi lên thay avt
 
@@ -58,12 +73,13 @@ const UserCard = () => {
   function handleClickChangeAvt() {
     setBtnState2((btnAvt) => !btnAvt);
   }
-  const editAvt = btnAvt ? "active" : "";
+  const editAvt = btnAvt ? "active" : null;
 
   // err show when get user data fail//
   if (userDetailsError) {
     return <Box>{userDetailsError}</Box>;
   }
+
   const handleAvt = () => {};
   // err show when get user data fail//
 

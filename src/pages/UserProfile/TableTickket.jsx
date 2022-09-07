@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { Box } from "@mui/material";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,18 +8,22 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { getTicketsList } from "../../slices/ticket";
+import { useSelector, useDispatch } from "react-redux";
 
-function createData(id, place, time, image, amount, totalCost) {
-  return { id, place, time, image, amount, totalCost };
-}
+export default function TableTicket() {
+  const dispatch = useDispatch();
+  const { ticketsList, isTicketsListLoading, ticketsListError } = useSelector(
+    (store) => store.ticket
+  );
+  const userId = useSelector((store) => store.auth.currentUser.user._id);
 
-const rows = [
-  createData(1, "HaLongBay", "22-30/09/2022", "None", "2", "500.000 VND"),
-  createData(2, "HaLongBay", "22-30/09/2022", "None", "2", "500.000 VND"),
-  createData(3, "HaLongBay", "22-30/09/2022", "None", "2", "500.000 VND"),
-];
-
-const TableTicket = () => {
+  useEffect(() => {
+    dispatch(getTicketsList(userId));
+  }, [userId]);
+  if (ticketsListError) {
+    return <Box>{ticketsListError}</Box>;
+  }
   return (
     <TableContainer component={Paper}>
       <Table
@@ -27,21 +33,23 @@ const TableTicket = () => {
       >
         <TableHead className="table_ticket_head">
           <TableRow>
+            <TableCell>ID</TableCell>
             <TableCell>Place</TableCell>
             <TableCell>Time</TableCell>
             <TableCell>Image</TableCell>
-            <TableCell>Amount</TableCell>
             <TableCell>Total Cost</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.place}</TableCell>
-              <TableCell>{row.time}</TableCell>
-              <TableCell>{row.image}</TableCell>
-              <TableCell>{row.amount}</TableCell>
-              <TableCell>{row.totalCost}</TableCell>
+          {ticketsList.map((ticket) => (
+            <TableRow>
+              <TableCell>{ticket.id}</TableCell>
+              <TableCell>{ticket.roomId.name}</TableCell>
+              <TableCell>{ticket.checkIn}</TableCell>
+              <TableCell className="table_img">
+                <img src={ticket.roomId.image} />
+              </TableCell>
+              <TableCell>{ticket.roomId.price}</TableCell>
             </TableRow>
           ))}
         </TableBody>
