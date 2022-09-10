@@ -18,6 +18,7 @@ const ProfileSetting = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   return (

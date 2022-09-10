@@ -115,7 +115,16 @@ export const createRoom = createAsyncThunk("room/createRoom", async (room) => {
 const roomSlice = createSlice({
   name: "room",
   initialState,
-  reducers: {},
+  reducers: {
+    resetBooking: (state) => {
+      return {
+        ...state,
+        bookingResponse: {},
+        isBookingLoading: false,
+        bookingError: null,
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getRoomsList.pending, (state) => {
       return { ...state, isRoomsListLoading: true, roomsListError: null };
@@ -256,5 +265,7 @@ const roomSlice = createSlice({
     });
   },
 });
+
+export const { resetBooking } = roomSlice.actions;
 
 export default roomSlice.reducer;

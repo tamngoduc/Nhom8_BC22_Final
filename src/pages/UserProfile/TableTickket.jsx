@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import { getTicketsList } from "../../slices/ticket";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function TableTicket() {
+const TableTicket = () => {
   const dispatch = useDispatch();
   const { ticketsList, isTicketsListLoading, ticketsListError } = useSelector(
     (store) => store.ticket
@@ -33,7 +33,6 @@ export default function TableTicket() {
       >
         <TableHead className="table_ticket_head">
           <TableRow>
-            <TableCell>ID</TableCell>
             <TableCell>Place</TableCell>
             <TableCell>Time</TableCell>
             <TableCell>Image</TableCell>
@@ -42,14 +41,13 @@ export default function TableTicket() {
         </TableHead>
         <TableBody>
           {ticketsList.map((ticket) => (
-            <TableRow>
-              <TableCell>{ticket.id}</TableCell>
-              <TableCell>{ticket.roomId.name}</TableCell>
+            <TableRow key={ticket._id}>
+              <TableCell>{ticket.roomId?.name}</TableCell>
               <TableCell>{ticket.checkIn}</TableCell>
               <TableCell className="table_img">
-                <img src={ticket.roomId.image} />
+                <img src={ticket.roomId?.image} />
               </TableCell>
-              <TableCell>{ticket.roomId.price}</TableCell>
+              <TableCell>{ticket.roomId?.price}</TableCell>
             </TableRow>
           ))}
         </TableBody>

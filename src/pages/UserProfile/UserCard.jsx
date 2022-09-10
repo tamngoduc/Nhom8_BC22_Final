@@ -11,10 +11,16 @@ import { useNavigate } from "react-router-dom";
 
 const UserCard = () => {
   // get user data//
+  const {
+    userDetails,
+    userDetailsError,
+    updatedUserResponse,
+    updatedUserError,
+    isUpdatedUserLoading,
+  } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userDetails, userDetailsError } = useSelector((state) => state.user);
-  const { currentUser } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getUserDetails(currentUser.user?._id));
@@ -35,26 +41,12 @@ const UserCard = () => {
   });
   const onSubmit = (user) => {
     console.log(user);
-    dispatch(updateUser(userId, user));
+    dispatch(updateUser(currentUser.user?._id, user));
   };
   const onError = (errors) => {
     console.log(errors);
   };
-  // validate//
-  // get user data//
-  const dispatch = useDispatch();
-  const {
-    userDetails,
-    userDetailsError,
-    updatedUserResponse,
-    updatedUserError,
-    isUpdatedUserLoading,
-  } = useSelector((state) => state.user);
-  const userId = useSelector((store) => store.auth.currentUser.user._id);
 
-  useEffect(() => {
-    dispatch(getUserDetails(userId));
-  }, [userId]);
   // const handleClick = (currentUser) => {
   //   console.log(currentUser);
   // };
