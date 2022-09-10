@@ -11,14 +11,12 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useSnackbar } from "notistack";
 import { bookRoom } from "../../../slices/room";
-import { createTicket } from "../../../slices/ticket";
 
 const Payment = () => {
   const { roomDetails, bookingResponse, bookingError } = useSelector(
     (state) => state.room
   );
   const { reviewsList } = useSelector((state) => state.review);
-  const { currentUser } = useSelector((state) => state.auth);
   const [dateRange, setDateRange] = useState([null, null]);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const date1 = new Date(dateRange[0]).getTime();
@@ -27,14 +25,12 @@ const Payment = () => {
   const total = gap * roomDetails.price;
   const bookingData = {
     roomId: roomDetails._id,
-    userId: currentUser.user?._id,
     checkIn: dateRange[0] ? new Date(dateRange[0]).toISOString() : null,
     checkOut: dateRange[1] ? new Date(dateRange[1]).toISOString() : null,
   };
   const dispatch = useDispatch();
   const handleBooking = (bookingData) => {
     dispatch(bookRoom(bookingData));
-    dispatch(createTicket(bookingData));
   };
   const { enqueueSnackbar } = useSnackbar();
   const successAlert = (variant) => {

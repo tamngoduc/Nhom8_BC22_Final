@@ -7,7 +7,8 @@ import Pluralize from "react-pluralize";
 import RoomCard from "./RoomCard";
 
 const RoomsList = () => {
-  const { roomsList, roomsListError } = useSelector((state) => state.room);
+  const { roomsList, roomsListError, bookingResponse, bookingError } =
+    useSelector((state) => state.room);
   const { locationId } = useParams();
   const dispatch = useDispatch();
 

@@ -21,6 +21,10 @@ const initialState = {
   addedUserResponse: {},
   isAddedUserLoading: false,
   addedUserError: null,
+
+  uploadedAvatarResponse: {},
+  isUploadedAvatarLoading: false,
+  uploadedAvatarError: null,
 };
 
 export const getUserDetails = createAsyncThunk(
@@ -76,6 +80,18 @@ export const addUser = createAsyncThunk("user/addUser", async (user) => {
     throw error;
   }
 });
+
+export const uploadAvatar = createAsyncThunk(
+  "user/uploadAvatar",
+  async (user) => {
+    try {
+      const data = await userAPI.uploadAvatar(user);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -173,6 +189,28 @@ const userSlice = createSlice({
         ...state,
         isAddedUserLoading: false,
         addedUserError: error.message,
+      };
+    });
+
+    builder.addCase(uploadAvatar.pending, (state) => {
+      return {
+        ...state,
+        isUploadedAvatarLoading: true,
+        uploadedAvatarError: null,
+      };
+    });
+    builder.addCase(uploadAvatar.fulfilled, (state, { payload }) => {
+      return {
+        ...state,
+        isUploadedAvatarLoading: false,
+        uploadedAvatarResponse: payload,
+      };
+    });
+    builder.addCase(uploadAvatar.rejected, (state, { error }) => {
+      return {
+        ...state,
+        isUploadedAvatarLoading: false,
+        uploadedAvatarError: error.message,
       };
     });
   },
