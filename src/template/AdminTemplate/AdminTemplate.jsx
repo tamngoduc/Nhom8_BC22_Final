@@ -85,6 +85,9 @@ const AdminTemplate = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
+  if (!Object.keys(currentUser).length) {
+    return <Navigate to="/" replace />;
+  }
   const toggleDrawer = () => {
     setOpen(!open);
   };
