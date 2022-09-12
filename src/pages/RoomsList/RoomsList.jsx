@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getRoomsList } from "../../slices/room";
+import { getRoomsList, resetBooking } from "../../slices/room";
 import Pluralize from "react-pluralize";
 import RoomCard from "./RoomCard";
 
@@ -14,6 +14,9 @@ const RoomsList = () => {
 
   useEffect(() => {
     dispatch(getRoomsList(locationId));
+    if (Object.keys(bookingResponse).length || bookingError) {
+      dispatch(resetBooking());
+    }
   }, [locationId]);
 
   if (roomsListError) {

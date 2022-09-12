@@ -24,9 +24,6 @@ const RoomBooking = () => {
   useEffect(() => {
     dispatch(getRoomDetails(roomId));
     dispatch(getReviewsList(roomId));
-    if (Object.keys(bookingResponse).length || bookingError) {
-      dispatch(resetBooking());
-    }
   }, [roomId]);
 
   if (roomDetailsError) {
