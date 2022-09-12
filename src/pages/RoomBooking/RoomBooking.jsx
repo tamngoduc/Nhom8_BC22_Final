@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Box, Divider, Grid, Typography, useMediaQuery } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getRoomDetails } from "../../slices/room";
+import { getRoomDetails, resetBooking } from "../../slices/room";
 import { getReviewsList } from "../../slices/review";
 import StarIcon from "@mui/icons-material/Star";
 import { dFlex } from "../../themes/comonStyles";
@@ -14,7 +14,8 @@ import { SnackbarProvider } from "notistack";
 import theme from "../../themes/appThemeProvider";
 
 const RoomBooking = () => {
-  const { roomDetails, roomDetailsError } = useSelector((state) => state.room);
+  const { roomDetails, roomDetailsError, bookingResponse, bookingError } =
+    useSelector((state) => state.room);
   const { reviewsList } = useSelector((state) => state.review);
   const { roomId } = useParams();
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ const RoomBooking = () => {
   useEffect(() => {
     dispatch(getRoomDetails(roomId));
     dispatch(getReviewsList(roomId));
+    if (Object.keys(bookingResponse).length || bookingError) {
+      dispatch(resetBooking());
+    }
   }, [roomId]);
 
   if (roomDetailsError) {

@@ -20,6 +20,14 @@ const userAPI = {
   updateUser: (userId, user) => {
     return axiosClient.put(`users/${userId}`, user);
   },
+
+  uploadAvatar: (user) => {
+    const formData = new FormData();
+    for (const key in user) {
+      formData.append(key, user[key]);
+    }
+    return axiosClient.post("users/upload-avatar", formData);
+  },
 };
 
 export default userAPI;
