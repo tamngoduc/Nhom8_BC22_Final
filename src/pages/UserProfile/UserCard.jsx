@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Card.css";
-import { Box, Grid } from "@mui/material";
+import { Avatar, Box, Grid } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserDetails, updateUser } from "../../slices/user";
@@ -201,9 +201,9 @@ const UserCard = () => {
           <div className="upper-container">
             <div onClick={handleClickChangeAvt} className="image-container">
               <img
-                src="https://pbs.twimg.com/profile_images/919509936098463744/lmTNN6AO_400x400.jpg"
+                src={currentUser.user?.avatar}
                 className="card-img-top"
-                alt="..."
+                alt="avatar"
               />
             </div>
           </div>
