@@ -154,9 +154,13 @@ const AdminTemplate = () => {
                 theme.palette.mode === "light"
                   ? theme.palette.grey[100]
                   : theme.palette.grey[900],
-              flexGrow: 1,
+              // flexGrow: 1,
               height: "100vh",
-              overflow: "auto",
+              // overflow: "auto",
+              display: "flex",
+              flexDirection: "column",
+              flexGrow: 1,
+              overflowY: "scroll",
             }}
           >
             <Toolbar />
