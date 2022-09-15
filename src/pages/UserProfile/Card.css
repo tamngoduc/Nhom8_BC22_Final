@@ -10,6 +10,7 @@
 .upper-container {
   height: 100px;
   background: linear-gradient(to left, #2d00f7, #ff0291);
+  cursor: pointer;
 }
 
 .UserCard:hover {

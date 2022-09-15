@@ -10,7 +10,6 @@ import Pluralize from "react-pluralize";
 import Payment from "./Payment/Payment";
 import RoomDetails from "./RoomDetails/RoomDetails";
 import Review from "./Review/Review";
-import { SnackbarProvider } from "notistack";
 import theme from "../../themes/appThemeProvider";
 
 const RoomBooking = () => {
@@ -30,46 +29,44 @@ const RoomBooking = () => {
     return <Box>{roomDetailsError}</Box>;
   }
   return (
-    <SnackbarProvider maxSnack={3}>
-      <Box sx={{ m: 2 }}>
-        <Box>
-          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-            {roomDetails.name}
+    <Box sx={{ m: 2 }}>
+      <Box>
+        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+          {roomDetails.name}
+        </Typography>
+        <Box sx={{ ...dFlex, mt: 2, alignItems: "center" }}>
+          <StarIcon size={18} />
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+            {roomDetails.locationId?.valueate}
           </Typography>
-          <Box sx={{ ...dFlex, mt: 2, alignItems: "center" }}>
-            <StarIcon size={18} />
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              {roomDetails.locationId?.valueate}
-            </Typography>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mx: 2 }}>
-              <Pluralize singular={"review"} count={reviewsList.length} />
-            </Typography>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              {roomDetails.locationId?.province},{" "}
-              {roomDetails.locationId?.country}
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box sx={{ my: 2 }}>
-          <Grid container spacing={isMobile ? 3 : 12}>
-            <Grid item xs={12} sm={12} md={7} lg={8}>
-              <RoomDetails />
-            </Grid>
-
-            <Grid item xs={12} sm={12} md={5} lg={4}>
-              <Payment />
-            </Grid>
-          </Grid>
-        </Box>
-
-        <Divider sx={{ my: 4 }} />
-
-        <Box>
-          <Review />
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mx: 2 }}>
+            <Pluralize singular={"review"} count={reviewsList.length} />
+          </Typography>
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+            {roomDetails.locationId?.province},{" "}
+            {roomDetails.locationId?.country}
+          </Typography>
         </Box>
       </Box>
-    </SnackbarProvider>
+
+      <Box sx={{ my: 2 }}>
+        <Grid container spacing={isMobile ? 3 : 12}>
+          <Grid item xs={12} sm={12} md={7} lg={8}>
+            <RoomDetails />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={5} lg={4}>
+            <Payment />
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Divider sx={{ my: 4 }} />
+
+      <Box>
+        <Review />
+      </Box>
+    </Box>
   );
 };
 

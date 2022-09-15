@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useSnackbar } from "notistack";
 import { bookRoom } from "../../../slices/room";
-import { Navigate } from "react-router-dom";
 
 const Payment = () => {
   const { roomDetails, bookingResponse, bookingError } = useSelector(
@@ -48,14 +47,10 @@ const Payment = () => {
   }, [bookingResponse]);
 
   useEffect(() => {
-    if (bookingError?.length) {
+    if (bookingError) {
       errorAlert("error");
     }
   }, [bookingError]);
-
-  if (Object.keys(bookingResponse).length) {
-    return <Navigate to="/account" />;
-  }
 
   return (
     <Paper elevation={12} sx={{ borderRadius: 5 }}>

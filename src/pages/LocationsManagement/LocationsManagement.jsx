@@ -86,7 +86,7 @@ const LocationsManagement = () => {
   ];
   const options = {
     filter: true,
-    selectableRows: "multiple",
+    selectableRows: "single",
     filterType: "dropdown",
     responsive: "vertical",
     rowsPerPage: 10,
