@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
+import { SnackbarProvider } from "notistack";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import MainTemplate from "./template/MainTemplate/MainTemplate";
 import Home from "./pages/Home/Home";
@@ -21,27 +22,29 @@ const App = () => {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Routes>
-          <Route path="/" element={<MainTemplate />}>
-            <Route index element={<Home />} />
-            <Route path="rooms/:locationId" element={<RoomsList />} />
-            <Route path="booking/:roomId" element={<RoomBooking />} />
-            <Route path="/account" element={<UserProfile />} />
-          </Route>
+        <SnackbarProvider maxSnack={3}>
+          <Routes>
+            <Route path="/" element={<MainTemplate />}>
+              <Route index element={<Home />} />
+              <Route path="rooms/:locationId" element={<RoomsList />} />
+              <Route path="booking/:roomId" element={<RoomBooking />} />
+              <Route path="/account" element={<UserProfile />} />
+            </Route>
 
-          <Route element={<AuthTemplate />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/sign-up" element={<SignUp />} />
-          </Route>
+            <Route element={<AuthTemplate />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/sign-up" element={<SignUp />} />
+            </Route>
 
-          <Route path="/admin" element={<AdminTemplate />}>
-            <Route path="users" element={<UsersManagement />} />
-            <Route path="rooms" element={<RoomsManagement />} />
-            <Route path="locations" element={<LocationsManagement />} />
-          </Route>
+            <Route path="/admin" element={<AdminTemplate />}>
+              <Route path="users" element={<UsersManagement />} />
+              <Route path="rooms" element={<RoomsManagement />} />
+              <Route path="locations" element={<LocationsManagement />} />
+            </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </SnackbarProvider>
       </ThemeProvider>
     </BrowserRouter>
   );

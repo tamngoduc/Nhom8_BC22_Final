@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -11,15 +11,25 @@ import { useNavigate } from "react-router-dom";
 import { flexCenter } from "../../../themes/comonStyles";
 import { Avatar } from "@mui/material";
 import { logout } from "../../../slices/auth";
+import { getUserDetails } from "../../../slices/user";
 
 const ProfileSetting = () => {
   const { currentUser } = useSelector((state) => state.auth);
+  const { userDetails, updatedUserResponse } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
   };
+
+  useEffect(() => {
+    if (Object.keys(currentUser).length) {
+      dispatch(getUserDetails(currentUser.user?._id));
+    }
+  }, [currentUser.user?._id, updatedUserResponse]);
 
   return (
     <Box sx={flexCenter}>
@@ -33,10 +43,8 @@ const ProfileSetting = () => {
       <Stack justifyContent="flex-end">
         {Object.keys(currentUser).length ? (
           <Button onClick={() => navigate("/account")}>
-            <Avatar
-              src={currentUser.user?.avatar ? currentUser.user?.avatar : null}
-            />
-            <Typography>{currentUser.user?.name}</Typography>
+            <Avatar src={userDetails.avatar ? userDetails.avatar : null} />
+            <Typography>{userDetails.name}</Typography>
           </Button>
         ) : (
           <Button
