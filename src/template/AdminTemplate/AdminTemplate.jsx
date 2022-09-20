@@ -21,6 +21,7 @@ import MapsHomeWorkRoundedIcon from "@mui/icons-material/MapsHomeWorkRounded";
 import { Outlet } from "react-router-dom";
 import {
   Avatar,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -105,7 +106,11 @@ const AdminTemplate = () => {
   if (!Object.keys(currentUser).length) {
     return <Navigate to="/" replace />;
   }
-  if (userDetails?.type === "ADMIN") {
+
+  if (!userDetails) {
+    return <CircularProgress style={{ margin: "auto" }} />;
+  }
+  if (userDetails.type === "ADMIN") {
     return (
       <ThemeProvider theme={mdTheme}>
         <Box sx={{ display: "flex" }}>
@@ -198,7 +203,7 @@ const AdminTemplate = () => {
         </Box>
       </ThemeProvider>
     );
-  } else {
+  } else if (userDetails.type === "CLIENT") {
     return (
       <Dialog
         open={open}

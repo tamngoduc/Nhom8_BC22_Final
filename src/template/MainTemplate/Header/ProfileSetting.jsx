@@ -15,9 +15,8 @@ import { getUserDetails } from "../../../slices/user";
 
 const ProfileSetting = () => {
   const { currentUser } = useSelector((state) => state.auth);
-  const { userDetails, updatedUserResponse } = useSelector(
-    (state) => state.user
-  );
+  const { userDetails, updatedUserResponse, uploadedAvatarResponse } =
+    useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -29,7 +28,7 @@ const ProfileSetting = () => {
     if (Object.keys(currentUser).length) {
       dispatch(getUserDetails(currentUser.user?._id));
     }
-  }, [currentUser.user?._id, updatedUserResponse]);
+  }, [currentUser.user?._id, updatedUserResponse, uploadedAvatarResponse]);
 
   return (
     <Box sx={flexCenter}>

@@ -21,12 +21,8 @@ const userAPI = {
     return axiosClient.put(`users/${userId}`, user);
   },
 
-  uploadAvatar: (user) => {
-    const formData = new FormData();
-    for (const key in user) {
-      formData.append(key, user[key]);
-    }
-    return axiosClient.post("users/upload-avatar", formData);
+  uploadAvatar: (avatar) => {
+    return axiosClient.post("users/upload-avatar", avatar);
   },
 };
 

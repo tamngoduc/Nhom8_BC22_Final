@@ -3,10 +3,16 @@ import { Box, CircularProgress } from "@mui/material";
 import UserCard from "./UserCard";
 import { Grid } from "@mui/material";
 import TableTicket from "./TableTickket";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { reset } from "../../slices/user";
 
 const UserProfile = () => {
   const { isUserDetailsLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(reset());
+  }, []);
 
   return (
     <Box className="bg_img">
