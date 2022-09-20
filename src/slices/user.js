@@ -50,7 +50,7 @@ export const getUsersList = createAsyncThunk("user/getUsersList", async () => {
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async (userId, user) => {
+  async ({ userId, user }) => {
     try {
       const data = await userAPI.updateUser(userId, user);
       return data;
@@ -83,9 +83,9 @@ export const addUser = createAsyncThunk("user/addUser", async (user) => {
 
 export const uploadAvatar = createAsyncThunk(
   "user/uploadAvatar",
-  async (user) => {
+  async (avatar) => {
     try {
-      const data = await userAPI.uploadAvatar(user);
+      const data = await userAPI.uploadAvatar(avatar);
       return data;
     } catch (error) {
       throw error;
@@ -96,7 +96,16 @@ export const uploadAvatar = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      return {
+        ...state,
+        updatedUserResponse: {},
+        deletedUserResponse: {},
+        uploadedAvatarResponse: {},
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.pending, (state) => {
       return { ...state, isUserDetailsLoading: true, userDetailsError: null };
@@ -215,5 +224,7 @@ const userSlice = createSlice({
     });
   },
 });
+
+export const { reset } = userSlice.actions;
 
 export default userSlice.reducer;

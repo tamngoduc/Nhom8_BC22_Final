@@ -10,14 +10,23 @@ import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   Stack,
   TablePagination,
   Typography,
 } from "@mui/material";
-import { deleteLocation, getLocationsList } from "../../slices/location";
+import {
+  deleteLocation,
+  getLocationDetails,
+  getLocationsList,
+} from "../../slices/location";
+import LocationForm from "./LocationForm";
 
 const LocationsManagement = () => {
   const {
@@ -25,6 +34,16 @@ const LocationsManagement = () => {
     isLocationsListLoading,
     deletedLocationResponse,
     deletedLocationError,
+
+    updatedLocationResponse,
+    isUpdatedLocationLoading,
+    updatedLocationError,
+    createdLocationResponse,
+    isCreatedLocationLoading,
+    createdLocationError,
+    uploadedLocationImageResponse,
+    isUploadedLocationImageLoading,
+    uploadedLocationImageError,
   } = useSelector((state) => state.location);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -34,7 +53,22 @@ const LocationsManagement = () => {
   const errorDelete = (variant) => {
     enqueueSnackbar(`${deletedLocationError}`, { variant });
   };
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleEdit = (locationId) => {
+    setOpenModal(true);
+    dispatch(getLocationDetails(locationId));
+  };
+  const handleClose = () => {
+    setOpenModal(false);
+  };
   const columns = [
+    {
+      name: "_id",
+      label: "ID",
+      options: {
+        display: false,
+      },
+    },
     {
       name: "name",
       label: "Name",
@@ -73,9 +107,7 @@ const LocationsManagement = () => {
             <IconButton
               color="warning"
               aria-label="delete"
-              onClick={() =>
-                window.alert(`Clicked "Edit" for row ${tableMeta.rowIndex}`)
-              }
+              onClick={() => handleEdit(tableMeta.rowData[0])}
             >
               <BuildRoundedIcon />
             </IconButton>
@@ -99,14 +131,24 @@ const LocationsManagement = () => {
   };
 
   React.useEffect(() => {
-    if (!locationsList.length) {
+    if (
+      !locationsList.length ||
+      deletedLocationResponse ||
+      updatedLocationResponse ||
+      createdLocationResponse ||
+      uploadedLocationImageResponse
+    ) {
       dispatch(getLocationsList(""));
     }
-  }, []);
+  }, [
+    deletedLocationResponse,
+    updatedLocationResponse,
+    createdLocationResponse,
+    uploadedLocationImageResponse,
+  ]);
   React.useEffect(() => {
     if (Object.keys(deletedLocationResponse).length) {
       successDelete("success");
-      dispatch(getLocationsList(""));
     }
   }, [deletedLocationResponse]);
   React.useEffect(() => {
@@ -128,12 +170,38 @@ const LocationsManagement = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <MUIDataTable
-          title={"Location Management"}
-          data={locationsList}
-          columns={columns}
-          options={options}
-        />
+        <Box>
+          <MUIDataTable
+            title={"Location Management"}
+            data={locationsList}
+            columns={columns}
+            options={options}
+          />
+
+          <Dialog open={openModal}>
+            <DialogTitle sx={{ m: 0, p: 2 }}>
+              <Typography>adsd</Typography>
+              {/* {selectedPhim?.current?.tenPhim
+                ? `Sửa phim: ${selectedPhim?.current?.tenPhim}`
+                : "Thêm Phim"} */}
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle>
+            <DialogContent dividers>
+              <LocationForm />
+            </DialogContent>
+          </Dialog>
+        </Box>
       )}
     </React.Fragment>
   );

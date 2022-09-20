@@ -78,7 +78,7 @@ const SignUp = () => {
             Sign up
           </Typography>
           <br />
-          <Box component="form">
+          <Box>
             <form sx={{ mt: 3 }} onSubmit={handleSubmit(onSubmit, onError)}>
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={6}>

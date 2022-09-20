@@ -208,6 +208,7 @@
   background-color: #ff0263;
   border: 0;
   overflow: hidden;
+  cursor: pointer;
 }
 .btn-avt-change:hover {
   transition: all 0.5s;

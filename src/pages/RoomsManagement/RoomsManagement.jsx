@@ -3,9 +3,17 @@ import MUIDataTable from "mui-datatables";
 import { useSnackbar } from "notistack";
 import IconButton from "@mui/material/IconButton";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
-import { Box, CircularProgress } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Box,
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteRoom, getRoomsList } from "../../slices/room";
+import { deleteRoom, getRoomDetails, getRoomsList } from "../../slices/room";
 
 const RoomsManagement = () => {
   const {
@@ -22,7 +30,22 @@ const RoomsManagement = () => {
   const errorDelete = (variant) => {
     enqueueSnackbar(`${deletedRoomError}`, { variant });
   };
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleEdit = (roomId) => {
+    setOpenModal(true);
+    dispatch(getRoomDetails(roomId));
+  };
+  const handleClose = () => {
+    setOpenModal(false);
+  };
   const columns = [
+    {
+      name: "_id",
+      label: "ID",
+      options: {
+        display: false,
+      },
+    },
     {
       name: "name",
       label: "Name",
@@ -82,9 +105,7 @@ const RoomsManagement = () => {
             <IconButton
               color="warning"
               aria-label="delete"
-              onClick={() =>
-                window.alert(`Clicked "Edit" for row ${tableMeta.rowIndex}`)
-              }
+              onClick={() => handleEdit(tableMeta.rowData[0])}
             >
               <BuildRoundedIcon />
             </IconButton>
@@ -106,14 +127,13 @@ const RoomsManagement = () => {
   };
 
   React.useEffect(() => {
-    if (!roomsList.length) {
+    if (!roomsList.length || deletedRoomResponse) {
       dispatch(getRoomsList(""));
     }
-  }, []);
+  }, [deletedRoomResponse]);
   React.useEffect(() => {
     if (Object.keys(deletedRoomResponse).length) {
       successDelete("success");
-      dispatch(getRoomsList(""));
     }
   }, [deletedRoomResponse]);
   React.useEffect(() => {
@@ -135,12 +155,36 @@ const RoomsManagement = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <MUIDataTable
-          title={"Room Management"}
-          data={roomsList}
-          columns={columns}
-          options={options}
-        />
+        <Box>
+          <MUIDataTable
+            title={"Room Management"}
+            data={roomsList}
+            columns={columns}
+            options={options}
+          />
+
+          <Dialog open={openModal}>
+            <DialogTitle sx={{ m: 0, p: 2 }}>
+              <Typography>adsd</Typography>
+              {/* {selectedPhim?.current?.tenPhim
+                ? `Sửa phim: ${selectedPhim?.current?.tenPhim}`
+                : "Thêm Phim"} */}
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle>
+            <DialogContent dividers></DialogContent>
+          </Dialog>
+        </Box>
       )}
     </React.Fragment>
   );

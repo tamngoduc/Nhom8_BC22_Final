@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Card.css";
 import { Box, Grid } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../slices/user";
+import { updateUser, uploadAvatar } from "../../slices/user";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
@@ -11,39 +11,49 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
 const UserCard = () => {
-  // get user data//
   const {
     userDetails,
     userDetailsError,
     updatedUserResponse,
     updatedUserError,
-    isUpdatedUserLoading,
+    uploadedAvatarResponse,
+    uploadedAvatarError,
   } = useSelector((state) => state.user);
-  const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // validate//
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      name: userDetails.name,
-      email: userDetails.email,
-      phone: userDetails.phone,
-      avatar: userDetails.avatar,
-      type: userDetails.type,
-    },
+    defaultValues: userDetails,
     mode: "onTouched",
   });
   const onSubmit = (user) => {
-    console.log(user);
-    dispatch(updateUser(userDetails._id, user));
+    dispatch(updateUser({ userId: userDetails._id, user }));
   };
   const onError = (errors) => {
     console.log(errors);
+  };
+  const [btnState, setBtnState] = useState(false);
+  const handleClickChangein4 = () => {
+    setBtnState((btnState) => !btnState);
+  };
+  const editIn4 = btnState ? "active" : null;
+  const [btnAvt, setBtnState2] = useState(false);
+  const handleClickChangeAvt = () => {
+    setBtnState2((btnAvt) => !btnAvt);
+  };
+  const editAvt = btnAvt ? "active" : null;
+
+  const avtRef = useRef(null);
+  const handleAvt = () => {
+    console.log(avtRef.current.files[0]);
+  };
+  const handleAvtAPI = () => {
+    const formData = new FormData();
+    formData.append("avatar", avtRef.current.files[0]);
+    dispatch(uploadAvatar(formData));
   };
   const { enqueueSnackbar } = useSnackbar();
   const successAlert = (variant) => {
@@ -54,55 +64,35 @@ const UserCard = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(updatedUserResponse).length) {
+    if (
+      Object.keys(updatedUserResponse).length ||
+      Object.keys(uploadedAvatarResponse).length
+    ) {
       successAlert("success");
     }
-  }, [updatedUserResponse]);
+  }, []);
 
   useEffect(() => {
     if (updatedUserError) {
       errorAlert("error");
     }
-  }, [updatedUserError]);
+  }, [updatedUserError, uploadedAvatarError]);
 
-  // xử lí click edit thì form chồi lên editin4
-
-  const [btnState, setBtnState] = useState(false);
-  function handleClickChangein4() {
-    setBtnState((btnState) => !btnState);
-  }
-  const editIn4 = btnState ? "active" : null;
-
-  // xử lí click edit thì form chồi lên thay avt
-
-  const [btnAvt, setBtnState2] = useState(false);
-  function handleClickChangeAvt() {
-    setBtnState2((btnAvt) => !btnAvt);
-  }
-  const editAvt = btnAvt ? "active" : null;
-
-  // err show when get user data fail//
   if (userDetailsError) {
     return <Box>{userDetailsError}</Box>;
   }
 
-  const handleAvt = () => {};
-  // err show when get user data fail//
-
-  // if (Object.keys(currentUser).length) {
   return (
     <Box>
-      {/* form in4 */}
+      {/* edit form */}
       <Box>
         <div className={`popup ${editIn4}`}>
           <div onClick={handleClickChangein4} className="close-btn">
             &times;
           </div>
-
           <form sx={{ mt: 3 }} onSubmit={handleSubmit(onSubmit, onError)}>
             <Grid container spacing={2}>
               <h2>Change your information</h2>
-
               <Grid item xs={12} sm={12}>
                 <TextField
                   required
@@ -172,14 +162,9 @@ const UserCard = () => {
                 />
               </Grid>
             </Grid>
-            {/* show error when fail to call API*/}
-            {/* {registerError && <span>{registerError}</span>} */}
-            {/*  */}
-            {/* btn to submit form */}
             <Button
               className="btn_Change"
               type="submit"
-              // disabled={isRegisterLoading}
               variant="contained"
               size="large"
               color="error"
@@ -190,7 +175,8 @@ const UserCard = () => {
           </form>
         </div>
       </Box>
-      {/* form avatar */}
+
+      {/* avatar form */}
       <Box>
         <div className={`popup ${editAvt}`}>
           <div onClick={handleClickChangeAvt} className="close-btn ">
@@ -199,20 +185,20 @@ const UserCard = () => {
           <div className="form">
             <h2>Change your avatar</h2>
 
-            <Button className="btn btn-avt">
+            <Button className="btn btn-avt" onChange={handleAvt}>
               <FileUploadRoundedIcon />
               Upload Image
-              <input type="file" />
+              <input ref={avtRef} type="file" />
             </Button>
 
-            <Button onClick={handleAvt} className="btn btn-avt-change">
+            <Button onClick={handleAvtAPI} className="btn btn-avt-change ">
               Update Avatar
             </Button>
           </div>
         </div>
       </Box>
 
-      {/* card */}
+      {/* user card */}
       <Box className="card Card UserCard">
         <div className="upper-container">
           <div onClick={handleClickChangeAvt} className="image-container">
@@ -224,7 +210,6 @@ const UserCard = () => {
           </div>
         </div>
         <br />
-
         <div className="card-body lower-container">
           <div>
             <h3>{userDetails.name}</h3>
@@ -232,17 +217,14 @@ const UserCard = () => {
             <h4>Phone: {userDetails.phone}</h4>
           </div>
         </div>
-
         <div className="btn">
           <Button
             onClick={() => {
               handleClickChangein4();
-              // onSelect(userId);
             }}
           >
             Edit Information
           </Button>
-
           {userDetails.type === "ADMIN" ? (
             <Button
               onClick={() => {
