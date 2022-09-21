@@ -57,20 +57,19 @@ const Review = () => {
                 </Grid>
               );
             })}
-
-            {reviewsList.length > 8 ? (
-              <Button
-                sx={{ my: 2 }}
-                variant="contained"
-                size="medium"
-                color="info"
-                onClick={showMoreItems}
-                disabled={reviewsList.length === visible ? true : false}
-              >
-                Show more
-              </Button>
-            ) : null}
           </Grid>
+          {reviewsList.length > 8 ? (
+            <Button
+              sx={{ my: 2 }}
+              variant="contained"
+              size="medium"
+              color="info"
+              onClick={showMoreItems}
+              disabled={reviewsList.length <= visible ? true : false}
+            >
+              Show more
+            </Button>
+          ) : null}
         </Box>
       ) : null}
     </Box>

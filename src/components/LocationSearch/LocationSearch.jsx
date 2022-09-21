@@ -67,7 +67,6 @@ const LocationSearch = () => {
               }}
             >
               <LocationOnOutlinedIcon />
-
               {option.name}
             </li>
           )

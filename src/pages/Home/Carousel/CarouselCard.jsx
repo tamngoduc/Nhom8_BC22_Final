@@ -9,15 +9,23 @@ import {
   fixedIcon,
   carouselImage,
 } from "../../../themes/comonStyles";
-import "./CarouselCard.css";
+import { useNavigate } from "react-router-dom";
+
 const CarouselCard = ({ location }) => {
+  const navigate = useNavigate();
+
   return (
     <Box
       className="carouselCard"
       sx={{
         flexGrow: 1,
         position: "relative",
+        cursor: "pointer",
+        "&:hover": {
+          opacity: 0.8,
+        },
       }}
+      onClick={() => navigate(`/rooms/${location._id}`)}
     >
       <Box sx={fixedIcon}>
         <FaRegHeart size={24} color="#fff" />
@@ -27,20 +35,34 @@ const CarouselCard = ({ location }) => {
         borderRadius="solid 2px"
         width="100%"
         component="img"
-        src={location.locationImages}
+        src={
+          location.image && location.image.length > 0
+            ? location.image
+            : "https://media.istockphoto.com/vectors/default-image-icon-vector-missing-picture-page-for-website-design-or-vector-id1357365823?k=20&m=1357365823&s=612x612&w=0&h=ZH0MQpeUoSHM3G2AWzc8KkGYRg4uP_kuu0Za8GFxdFc="
+        }
         sx={carouselImage}
       />
 
       <Box sx={flexBetween}>
         <Box sx={{ mt: 2 }}>
-          <Typography component="h3"> {location.location}</Typography>
-          <Typography component="h4"> {location.days}</Typography>
-          <Typography component="h5"> {location.price}</Typography>
+          <Typography
+            variant="subtitle1"
+            component="h1"
+            sx={{ fontWeight: "bold" }}
+          >
+            {location.name}
+          </Typography>
+          <Typography variant="subtitle2" component="h1" sx={{ p: 0 }}>
+            {location.province}
+          </Typography>
         </Box>
         <Box sx={{ mt: 2 }}>
           <Box sx={dFlex}>
             <React.Fragment>
-              <Typography component="h5"> {location.rating}</Typography>
+              <Typography variant="subtitle2" component="h5">
+                {" "}
+                {location.valueate}
+              </Typography>
               <AiFillStar size={18} />
             </React.Fragment>
           </Box>
