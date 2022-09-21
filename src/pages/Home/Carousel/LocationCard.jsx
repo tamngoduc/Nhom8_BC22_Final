@@ -1,25 +1,34 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { locations as cardLocations } from "../../../data/fakeApiforHome";
 import CarouselCard from "./CarouselCard";
+import { useSelector } from "react-redux";
+import { CircularProgress } from "@mui/material";
 
 const LocationCard = () => {
-  const [cards] = React.useState(cardLocations);
-  if (!cards.length) {
-    return null;
+  const { locationsList, isLocationsListLoading, locationsListError } =
+    useSelector((state) => state.location);
+
+  if (locationsListError) {
+    return <Box>{locationsListError}</Box>;
   }
   return (
     <Box sx={{ mx: 2 }}>
-      <Grid container rowSpacing={3} columnSpacing={3}>
-        {cards.map((location) => {
-          return (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={location.id}>
-              <CarouselCard location={location} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      {isLocationsListLoading ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Grid container rowSpacing={3} columnSpacing={3}>
+          {locationsList.map((location) => {
+            return (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={location._id}>
+                <CarouselCard location={location} />
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
     </Box>
   );
 };
