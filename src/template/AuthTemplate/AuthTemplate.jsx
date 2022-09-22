@@ -11,18 +11,28 @@ const AuthTemplate = () => {
     <SnackbarProvider maxSnack={3}>
       <Box
         sx={{
-          backgroundImage: `url("https://wallpapercave.com/wp/wp10784364.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: `${isMobile ? "left top" : "center"}`,
-          backgroundRepeat: "no-repeat",
-          width: "100vw",
-          height: "100vh",
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          flexDirection: "column",
+          height: "100vh",
         }}
       >
-        <Outlet />
+        <Box
+          sx={{
+            backgroundImage: `url("https://wallpapercave.com/wp/wp10784364.jpg")`,
+            backgroundSize: "cover",
+            backgroundPosition: `${isMobile ? "left top" : "center"}`,
+            backgroundRepeat: "no-repeat",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
+            overflowY: "scroll",
+          }}
+        >
+          <Outlet />
+        </Box>
       </Box>
     </SnackbarProvider>
   );

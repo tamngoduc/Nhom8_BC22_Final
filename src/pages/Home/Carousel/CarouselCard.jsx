@@ -1,8 +1,8 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import { AiFillStar } from "react-icons/ai";
-import { FaRegHeart } from "react-icons/fa";
 import {
   flexBetween,
   dFlex,
@@ -20,7 +20,7 @@ const CarouselCard = ({ location }) => {
       }}
     >
       <Box sx={fixedIcon}>
-        <FaRegHeart size={24} color="#fff" />
+        <FavoriteRoundedIcon className="icon__heart" size={24} color="#fff" />
       </Box>
 
       <Box
@@ -31,7 +31,7 @@ const CarouselCard = ({ location }) => {
         sx={carouselImage}
       />
 
-      <Box sx={flexBetween}>
+      <Box className="Carousel_card" sx={flexBetween}>
         <Box sx={{ mt: 2 }}>
           <Typography component="h3"> {location.location}</Typography>
           <Typography component="h4"> {location.days}</Typography>

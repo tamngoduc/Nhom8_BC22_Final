@@ -13,3 +13,10 @@
 .carouselCard {
   margin-top: 20px;
 }
+.icon__heart :hover {
+  color: rgb(233 30 99);
+  transition: all 0.3s;
+}
+.icon__heart {
+  color: white;
+}

@@ -71,7 +71,7 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "red" }}>
+          <Avatar sx={{ bgcolor: "red", mt: 9 }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" sx={{ fontWeight: "bold" }}>
@@ -80,7 +80,7 @@ const SignUp = () => {
           <br />
           <Box component="form">
             <form sx={{ mt: 3 }} onSubmit={handleSubmit(onSubmit, onError)}>
-              <Grid container spacing={1}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
